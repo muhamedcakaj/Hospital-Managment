@@ -51,7 +51,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void delete(int id) {
+        System.out.println(this.doctorRepository.existsById(id));
         if(!this.doctorRepository.existsById(id)){
+            System.out.println("here");
             throw new UserNotFoundException("Doctor Not Found with id: " + id);
         }
         this.doctorRepository.deleteById(id);
