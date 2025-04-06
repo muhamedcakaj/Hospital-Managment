@@ -1,7 +1,7 @@
 package com.example.Auth.DTO;
 
 public class AuthResponse {
-    private String token;
+    private final String token;
 
     public AuthResponse(String token) {
             this.token = token;

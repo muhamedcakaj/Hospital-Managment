@@ -1,5 +1,6 @@
 package com.example.Auth;
 
+import com.example.Auth.DTO.AuthResponse;
 import com.example.Auth.DTO.EmailConfirmationRequest;
 import com.example.Auth.DTO.LoginDTO;
 import com.example.Auth.DTO.SignupDTO;
@@ -7,6 +8,7 @@ import com.example.Auth.EmailService.EmailService;
 import com.example.Auth.ExceptionHandlers.InvalidUserInputException;
 import com.example.Auth.ExceptionHandlers.UnauthorizedActionException;
 import com.example.Auth.ExceptionHandlers.UserNotFoundException;
+import com.example.Auth.JWT.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,14 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthRepository authRepository;
     private final EmailService emailService;
+    private final JwtService jwtService;
 
     @Autowired
-    public AuthServiceImpl(PasswordEncoder passwordEncoder, AuthRepository authRepository, EmailService emailService) {
+    public AuthServiceImpl(PasswordEncoder passwordEncoder, AuthRepository authRepository, EmailService emailService,JwtService jwtService) {
         this.passwordEncoder = passwordEncoder;
         this.authRepository = authRepository;
         this.emailService = emailService;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -96,7 +100,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginDTO loginDTO) {
+    public AuthResponse login(LoginDTO loginDTO) {
 
         AuthEntity userEntity = authRepository.findByEmail(loginDTO.getEmail());
 
@@ -111,18 +115,16 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(loginDTO.getPassword(), userEntity.getPassword())) {
             throw new UnauthorizedActionException("Invalid credentials");
         }
+        String userId=String.valueOf(userEntity.getId());
+        String token = this.jwtService.generateToken(userId, userEntity.getEmail(), userEntity.getRole());
 
-        return "Sucessfully logged in";
+        return new AuthResponse(token);
     }
 
     @Override
-    public String verifyEmail(EmailConfirmationRequest request) {
+    public AuthResponse verifyEmail(EmailConfirmationRequest request) {
 
             AuthEntity user = authRepository.findByEmail(request.getEmail());
-
-            if (user.getEmailConfirmation() == 1) {
-                throw new RuntimeException("Email is already confirmed");
-            }
 
             if (!user.getConfirmationCode().equals(request.getCode())) {
                 throw new RuntimeException("Invalid confirmation code");
@@ -137,6 +139,9 @@ public class AuthServiceImpl implements AuthService {
             user.setConfirmationCodeExpiry(null);
             authRepository.save(user);
 
-            return "Email successfully confirmed!";
+            String userId=String.valueOf(user.getId());
+            String token = this.jwtService.generateToken(userId, user.getEmail(), user.getRole());
+
+        return new AuthResponse(token);
         }
     }

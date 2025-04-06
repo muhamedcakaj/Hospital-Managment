@@ -1,6 +1,7 @@
 package com.example.Auth;
 
 
+import com.example.Auth.DTO.AuthResponse;
 import com.example.Auth.DTO.EmailConfirmationRequest;
 import com.example.Auth.DTO.LoginDTO;
 import com.example.Auth.DTO.SignupDTO;
@@ -28,14 +29,14 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        String response = authService.login(loginDTO);
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginDTO loginDTO) {
+        AuthResponse response = authService.login(loginDTO);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/confirmEmail")
-    public ResponseEntity<String> confirmEmail(@RequestBody EmailConfirmationRequest request) {
-        String response = authService.verifyEmail(request);
+    public ResponseEntity<AuthResponse> confirmEmail(@RequestBody EmailConfirmationRequest request) {
+        AuthResponse response = authService.verifyEmail(request);
         return ResponseEntity.ok(response);
     }
 
