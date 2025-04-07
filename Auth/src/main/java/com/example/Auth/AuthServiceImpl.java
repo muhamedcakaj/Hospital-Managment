@@ -117,8 +117,9 @@ public class AuthServiceImpl implements AuthService {
         }
         String userId=String.valueOf(userEntity.getId());
         String token = this.jwtService.generateToken(userId, userEntity.getEmail(), userEntity.getRole());
+        String refreshToken = jwtService.generateRefreshToken(userId, userEntity.getEmail());
 
-        return new AuthResponse(token);
+        return new AuthResponse(token, refreshToken);
     }
 
     @Override
@@ -141,7 +142,9 @@ public class AuthServiceImpl implements AuthService {
 
             String userId=String.valueOf(user.getId());
             String token = this.jwtService.generateToken(userId, user.getEmail(), user.getRole());
+            String refreshToken = jwtService.generateRefreshToken(userId, user.getEmail());
 
-        return new AuthResponse(token);
+
+        return new AuthResponse(token,refreshToken);
         }
     }
