@@ -1,9 +1,6 @@
 package com.example.Auth;
 
-import com.example.Auth.DTO.AuthResponse;
-import com.example.Auth.DTO.EmailConfirmationRequest;
-import com.example.Auth.DTO.LoginDTO;
-import com.example.Auth.DTO.SignupDTO;
+import com.example.Auth.DTO.*;
 import com.example.Auth.EmailService.EmailService;
 import com.example.Auth.ExceptionHandlers.InvalidUserInputException;
 import com.example.Auth.ExceptionHandlers.UnauthorizedActionException;
@@ -97,6 +94,12 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(encryptedPassword);
         user.setConfirmationCode(confirmationCode);
         user.setConfirmationCodeExpiry(LocalDateTime.now().plusMinutes(10));
+
+        UserCreatedEvent userCreatedEvent = new UserCreatedEvent();
+        userCreatedEvent.setUserId(user.getId());
+        userCreatedEvent.setFirstName(signupDTO.getFirstName());
+        userCreatedEvent.setLastName(signupDTO.getLastName());
+        streamBridge.send("userCreated-out-0", userCreatedEvent);
 
         authRepository.save(user);
         emailService.sendConfirmationEmail(signupDTO.getEmail(), confirmationCode);
