@@ -95,14 +95,14 @@ public class AuthServiceImpl implements AuthService {
         user.setConfirmationCode(confirmationCode);
         user.setConfirmationCodeExpiry(LocalDateTime.now().plusMinutes(10));
 
+        authRepository.save(user);
+        emailService.sendConfirmationEmail(signupDTO.getEmail(), confirmationCode);
+
         UserCreatedEvent userCreatedEvent = new UserCreatedEvent();
         userCreatedEvent.setUserId(user.getId());
         userCreatedEvent.setFirstName(signupDTO.getFirstName());
         userCreatedEvent.setLastName(signupDTO.getLastName());
         streamBridge.send("userCreated-out-0", userCreatedEvent);
-
-        authRepository.save(user);
-        emailService.sendConfirmationEmail(signupDTO.getEmail(), confirmationCode);
     }
 
     @Override
