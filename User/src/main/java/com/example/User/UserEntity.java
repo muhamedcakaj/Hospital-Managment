@@ -16,11 +16,6 @@ public class UserEntity {
     @Column(nullable = false, length = 20)
     private String second_name;
 
-    @Column(length = 15)
-    private String specialization;
-
-    private String description;
-
     public int getId() {
         return id;
     }
@@ -39,21 +34,5 @@ public class UserEntity {
 
     public void setSecond_name(String second_name) {
         this.second_name = second_name;
-    }
-
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

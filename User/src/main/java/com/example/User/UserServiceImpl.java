@@ -37,13 +37,6 @@ public class UserServiceImpl implements UserService {
          if(userEntity.getSecond_name() != null ){
              user.setSecond_name(userEntity.getSecond_name());
          }
-         if(userEntity.getDescription() != null ){
-             user.setDescription(userEntity.getDescription());
-         }
-         if (userEntity.getSpecialization() != null ){
-             user.setSpecialization(userEntity.getSpecialization());
-         }
-
          return userRepository.save(user);
     }
 
