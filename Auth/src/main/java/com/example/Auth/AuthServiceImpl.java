@@ -10,8 +10,10 @@ import com.example.Auth.ExceptionHandlers.UnauthorizedActionException;
 import com.example.Auth.ExceptionHandlers.UserNotFoundException;
 import com.example.Auth.JWT.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -23,13 +25,15 @@ public class AuthServiceImpl implements AuthService {
     private final AuthRepository authRepository;
     private final EmailService emailService;
     private final JwtService jwtService;
+    private final StreamBridge streamBridge;
 
     @Autowired
-    public AuthServiceImpl(PasswordEncoder passwordEncoder, AuthRepository authRepository, EmailService emailService,JwtService jwtService) {
-        this.passwordEncoder = passwordEncoder;
+    public AuthServiceImpl(PasswordEncoder passwordEncoder, AuthRepository authRepository, EmailService emailService, JwtService jwtService,StreamBridge streamBridge) {
         this.authRepository = authRepository;
         this.emailService = emailService;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+        this.streamBridge = streamBridge;
     }
 
     @Override
@@ -95,7 +99,6 @@ public class AuthServiceImpl implements AuthService {
         user.setConfirmationCodeExpiry(LocalDateTime.now().plusMinutes(10));
 
         authRepository.save(user);
-
         emailService.sendConfirmationEmail(signupDTO.getEmail(), confirmationCode);
     }
 

@@ -1,6 +1,9 @@
 package com.example.Auth.DTO;
 
 public class SignupDTO {
+
+    private String firstName;
+    private String lastName;
    private String email;
    private String password;
 
@@ -18,5 +21,21 @@ public class SignupDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
