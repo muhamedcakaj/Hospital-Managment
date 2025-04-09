@@ -1,6 +1,6 @@
 package com.example.Doctor.DTO;
 
-public class DoctorCreatedEvent {
+public class DoctorCreatedDTO{
     private int id;
     private String firstName;
     private String lastName;

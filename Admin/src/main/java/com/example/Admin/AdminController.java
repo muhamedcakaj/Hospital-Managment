@@ -6,10 +6,7 @@ import com.example.Admin.Dto.UpdateDoctorDTO;
 import com.example.Admin.Dto.UpdateUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin")
@@ -43,5 +40,16 @@ public class AdminController {
     public ResponseEntity<String> updateDoctor(@RequestBody UpdateDoctorDTO dto) {
         adminService.updateDoctor(dto);
         return ResponseEntity.ok("Doctor update initiated");
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+        this.adminService.deleteUser(id);
+        return ResponseEntity.ok("Delete event sent as ID: " + id);
+    }
+    @DeleteMapping("/doctor/{id}")
+    public ResponseEntity<String> deleteDoctor(@PathVariable int id) {
+        this.adminService.deleteUser(id);
+        return ResponseEntity.ok("Delete event sent as ID: " + id);
     }
 }

@@ -20,7 +20,7 @@ public class UserConsumer {
     public Consumer<UserCreatedEvent> userCreatedConsumer() {
         return event -> {
             UserEntity user = new UserEntity();
-            user.setId(event.getUserId());
+            user.setId(event.getId());
             user.setFirst_name(event.getFirstName());
             user.setSecond_name(event.getLastName());
 

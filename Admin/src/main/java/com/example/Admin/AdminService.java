@@ -10,5 +10,7 @@ public interface AdminService {
     void createDoctor(CreateDoctorDTO dto);
     void updateUser(UpdateUserDTO dto);
     void updateDoctor(UpdateDoctorDTO dto);
+    void deleteUser(int id);
+    void deleteDoctor(int id);
 
 }

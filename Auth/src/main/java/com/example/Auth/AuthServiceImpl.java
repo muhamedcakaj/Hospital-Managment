@@ -99,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
         emailService.sendConfirmationEmail(signupDTO.getEmail(), confirmationCode);
 
         UserCreatedEvent userCreatedEvent = new UserCreatedEvent();
-        userCreatedEvent.setUserId(user.getId());
+        userCreatedEvent.setId(user.getId());
         userCreatedEvent.setFirstName(signupDTO.getFirstName());
         userCreatedEvent.setLastName(signupDTO.getLastName());
         streamBridge.send("userCreated-out-0", userCreatedEvent);

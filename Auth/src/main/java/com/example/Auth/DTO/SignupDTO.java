@@ -1,7 +1,6 @@
 package com.example.Auth.DTO;
 
 public class SignupDTO {
-
     private String firstName;
     private String lastName;
    private String email;

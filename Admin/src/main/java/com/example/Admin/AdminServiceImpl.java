@@ -70,7 +70,37 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateDoctor(UpdateDoctorDTO dto) {
+        if(dto.getId()<=0 || dto.getFirstName().isEmpty() || dto.getLastName().isEmpty()
+        ||dto.getDescription().isEmpty() || dto.getSpecialization().isEmpty()
+        || dto.getEmail().isEmpty()||(dto.getEmailConfirmation()>=2||dto.getEmailConfirmation()<0)) {
+            throw new InvalidUserInputException("Please fill all the necessary fields with correct values");
+        }
+        if(dto.getFirstName().length()>15||dto.getLastName().length()>15
+                || dto.getSpecialization().length()>15){
+            throw new InvalidUserInputException("Name or Surname or Specialization cannot be more than 15 characters");
+        }
 
+        if(dto.getEmail().length()>75){
+            throw new InvalidUserInputException("Email cannot be more than 75 characters");
+        }
+
+        streamBridge.send("doctorAdminUpdate-out-0", dto);
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        if(id<0){
+            throw new InvalidUserInputException("Please enter a valid ID");
+        }
+        streamBridge.send("userAdminDelete-out-0", id);
+    }
+
+    @Override
+    public void deleteDoctor(int id) {
+        if(id<0){
+            throw new InvalidUserInputException("Please enter a valid ID");
+        }
+        streamBridge.send("doctorAdminDelete-out-0", id);
     }
 
 }

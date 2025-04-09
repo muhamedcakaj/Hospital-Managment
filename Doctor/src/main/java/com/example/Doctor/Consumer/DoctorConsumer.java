@@ -1,6 +1,6 @@
 package com.example.Doctor.Consumer;
 
-import com.example.Doctor.DTO.DoctorCreatedEvent;
+import com.example.Doctor.DTO.DoctorCreatedDTO;
 import com.example.Doctor.DoctorEntity;
 import com.example.Doctor.DoctorRepository;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +18,8 @@ public class DoctorConsumer {
     }
 
     @Bean
-    public Consumer<DoctorCreatedEvent> doctorCreatedConsumer() {
+    public Consumer<DoctorCreatedDTO> doctorCreatedConsumer() {
         return event -> {
-            System.out.println("DoctorCreatedEvent" + event.getId());
             DoctorEntity doctor = new DoctorEntity();
             doctor.setId(event.getId());
             doctor.setFirst_name(event.getFirstName());

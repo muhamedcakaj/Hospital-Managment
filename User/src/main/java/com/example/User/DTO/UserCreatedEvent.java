@@ -1,15 +1,15 @@
 package com.example.User.DTO;
 
 public class UserCreatedEvent {
-    private int userId;
+    private int id;
     private String firstName;
     private String lastName;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() { return firstName; }

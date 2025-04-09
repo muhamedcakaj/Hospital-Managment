@@ -27,7 +27,6 @@ public class UserConsumerFromAdmin {
         @Bean
         public Consumer<AdminCreatedUserEvent> userCreatedAdminConsumer() {
             return event -> {
-
                 AuthEntity authEntity = new AuthEntity();
 
                 String encryptedPassword = passwordEncoder.encode(event.getPassword());
@@ -40,7 +39,7 @@ public class UserConsumerFromAdmin {
 
                 UserCreatedEvent userCreatedEvent = new UserCreatedEvent();
 
-                userCreatedEvent.setUserId(authEntity1.getId());
+                userCreatedEvent.setId(authEntity1.getId());
                 userCreatedEvent.setFirstName(event.getFirstName());
                 userCreatedEvent.setLastName(event.getLastName());
 

@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.function.Consumer;
 
 @Configuration
-public class UserCreateConsumerFromAdmin {
+public class UserUpdateConsumerFromAdmin {
 
     private final StreamBridge streamBridge;
     private final AuthRepository authRepository;
 
-    public UserCreateConsumerFromAdmin(StreamBridge streamBridge, AuthRepository authRepository) {
+    public UserUpdateConsumerFromAdmin(StreamBridge streamBridge, AuthRepository authRepository) {
         this.streamBridge = streamBridge;
         this.authRepository = authRepository;
     }
@@ -24,18 +24,17 @@ public class UserCreateConsumerFromAdmin {
     @Bean
     public Consumer<AdminEditeUserEvent> userUpdateAdminConsumer() {
         return event -> {
-
             AuthEntity authEntity1 = authRepository.findById(event.getId()).orElse(null);
             authEntity1.setEmail(event.getEmail());
             authEntity1.setEmailConfirmation(event.getEmailConfirmation());
             authRepository.save(authEntity1);
 
             UserCreatedEvent user = new UserCreatedEvent();
-            user.setUserId(event.getId());
+            user.setId(event.getId());
             user.setFirstName(event.getFirstName());
             user.setLastName(event.getLastName());
 
-            streamBridge.send("userCreated-out-0", user);
+            streamBridge.send("userUpdate-out-0", user);
         };
     }
 }
