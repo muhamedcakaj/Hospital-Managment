@@ -17,8 +17,6 @@ public class UserConsumer {
     @Bean
     public Consumer<UserCreatedEvent> userCreatedConsumer() {
         return event -> {
-            System.out.println("Received event: " + event.getUserId());
-
             UserEntity user = new UserEntity();
             user.setId(event.getUserId());
             user.setFirst_name(event.getFirstName());
