@@ -16,7 +16,7 @@ public class UserConsumerFromAdmin {
 
         private final AuthRepository authRepository;
         private final StreamBridge streamBridge;
-    private final PasswordEncoder passwordEncoder;
+        private final PasswordEncoder passwordEncoder;
 
         public UserConsumerFromAdmin(AuthRepository authRepository, StreamBridge streamBridge, PasswordEncoder passwordEncoder) {
             this.authRepository = authRepository;

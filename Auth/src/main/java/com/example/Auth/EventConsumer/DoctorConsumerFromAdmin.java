@@ -26,12 +26,12 @@ public class DoctorConsumerFromAdmin {
     @Bean
     public Consumer<AdminCreatedDoctorEvent> doctorCreatedAdminConsumer() {
         return event -> {
-
             AuthEntity authEntity = new AuthEntity();
             String encryptedPassword = passwordEncoder.encode(event.getPassword());
 
             authEntity.setEmail(event.getEmail());
             authEntity.setPassword(encryptedPassword);
+            authEntity.setRole("Doctor");
             authRepository.save(authEntity);
 
             AuthEntity authEntity1 = authRepository.findByEmail(event.getEmail());
@@ -41,6 +41,8 @@ public class DoctorConsumerFromAdmin {
             doctorCreatedEvent.setId(authEntity1.getId());
             doctorCreatedEvent.setFirstName(event.getFirstName());
             doctorCreatedEvent.setLastName(event.getLastName());
+            doctorCreatedEvent.setDescription(event.getDescription());
+            doctorCreatedEvent.setSpecialization(event.getSpecialization());
 
             streamBridge.send("doctorCreated-out-0", doctorCreatedEvent);
         };
