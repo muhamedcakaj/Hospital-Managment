@@ -1,6 +1,6 @@
-package com.example.Admin.Dto;
+package com.example.Auth.DTO;
 
-public class CreateDoctorDTO {
+public class AdminCreatedDoctorEvent {
     private String firstName;
     private String lastName;
     private String specialization;
