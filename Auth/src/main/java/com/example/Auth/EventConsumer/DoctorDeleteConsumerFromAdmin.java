@@ -1,7 +1,6 @@
 package com.example.Auth.EventConsumer;
 
 import com.example.Auth.AuthRepository;
-import com.example.Auth.AuthService;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +20,7 @@ public class DoctorDeleteConsumerFromAdmin {
     @Bean
     public Consumer<Integer> doctorDeleteAdminConsumer() {
         return event -> {
+            System.out.println("Doctor Delete Admin");
             this.authRepository.deleteById(event);
 
             this.streamBridge.send("doctorDeletee-out-0", event);

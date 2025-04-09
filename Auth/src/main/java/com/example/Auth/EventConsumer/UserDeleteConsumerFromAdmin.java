@@ -20,7 +20,6 @@ public class UserDeleteConsumerFromAdmin {
     @Bean
     public Consumer<Integer> userDeleteAdminConsumer() {
         return event -> {
-            System.out.println("userDeleteAdminConsumer-out-0");
             this.authRepository.deleteById(event);
 
             this.streamBridge.send("userDeletee-out-0", event);
