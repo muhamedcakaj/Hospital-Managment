@@ -153,4 +153,14 @@ public class AuthServiceImpl implements AuthService {
 
         return new AuthResponse(token,refreshToken);
         }
+
+    @Override
+    public Integer verifyEmailForDiagnosis(String email) {
+        AuthEntity entity = this.authRepository.findByEmail(email);
+
+        if(entity!=null){
+            return entity.getId();
+        }
+        return -1;
     }
+}

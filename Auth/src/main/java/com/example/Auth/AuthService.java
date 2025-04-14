@@ -14,4 +14,5 @@ public interface AuthService {
     void signup(SignupDTO signupDTO);
     AuthResponse login(LoginDTO loginDTO);
     AuthResponse verifyEmail(EmailConfirmationRequest request);
+    Integer verifyEmailForDiagnosis(String email);
 }

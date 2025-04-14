@@ -40,4 +40,10 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/verifyEmail/diagnosis")
+    public ResponseEntity<Integer> verifyEmailForDiagnosis(@RequestParam String email) {
+        return ResponseEntity.ok(this.authService.verifyEmailForDiagnosis(email));
+    }
+
+
 }
