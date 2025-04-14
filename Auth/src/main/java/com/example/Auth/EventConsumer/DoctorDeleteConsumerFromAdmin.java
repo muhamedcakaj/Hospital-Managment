@@ -20,7 +20,6 @@ public class DoctorDeleteConsumerFromAdmin {
     @Bean
     public Consumer<Integer> doctorDeleteAdminConsumer() {
         return event -> {
-            System.out.println("Doctor Delete Admin");
             this.authRepository.deleteById(event);
 
             this.streamBridge.send("doctorDeletee-out-0", event);

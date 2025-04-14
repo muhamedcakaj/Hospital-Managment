@@ -49,7 +49,7 @@ public class AdminController {
     }
     @DeleteMapping("/doctor/{id}")
     public ResponseEntity<String> deleteDoctor(@PathVariable int id) {
-        this.adminService.deleteUser(id);
+        this.adminService.deleteDoctor(id);
         return ResponseEntity.ok("Delete event sent as ID: " + id);
     }
 }
