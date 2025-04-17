@@ -1,3 +1,32 @@
+spring:
+  application:
+    name: Spring-Cloud-Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://USER
+          predicates:
+            - Path=/users/**
+        - id: auth-service
+          uri: lb://AUTH
+          predicates:
+            - Path=/auth/**
+        - id: doctor-service
+          uri: lb://DOCTOR
+          predicates:
+            - Path=/doctors/**
+        - id: admin-service
+          uri: lb://ADMIN
+          predicates:
+            - Path=/admin/**
+        - id: diagnosis-service
+          uri: lb://DIAGNOSIS
+          predicates:
+            - Path=/diagnosis/**
+    discovery:
+      client:
+        enabled: true
 eureka:
   client:
     service-url:
