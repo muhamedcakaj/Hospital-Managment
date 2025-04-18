@@ -29,13 +29,13 @@ public class DiagnosisController {
         return ResponseEntity.ok(this.diagnosisService.findByDoctorId(id));
     }
 
-    @PostMapping
+    @PostMapping("/doctor")
     public ResponseEntity<String> createDiagnosis(@RequestBody DiagnosisCreateDTO dto) {
         this.diagnosisService.createDiagnosis(dto);
         return ResponseEntity.ok("Diagnosis creation initiated");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/doctor/{id}")
     public ResponseEntity<DiagnosisEntity>updateDiagnose(
             @PathVariable int id,
             @RequestBody DiagnosisEntity diagnosisEntity) {
@@ -43,7 +43,7 @@ public class DiagnosisController {
         return ResponseEntity.ok(this.diagnosisService.updateDiagnosis(id, diagnosisEntity));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/doctor/{id}")
     public ResponseEntity<String> deleteDiagnosis(@PathVariable int id) {
         this.diagnosisService.deleteDiagnosisById(id);
         return ResponseEntity.ok("ok");

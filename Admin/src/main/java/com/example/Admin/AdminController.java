@@ -6,10 +6,12 @@ import com.example.Admin.Dto.UpdateDoctorDTO;
 import com.example.Admin.Dto.UpdateUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin")
+@PreAuthorize("hasRole('Admin')")
 public class AdminController {
 
     private final AdminService adminService;
