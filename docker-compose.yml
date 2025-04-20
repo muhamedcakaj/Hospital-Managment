@@ -20,6 +20,61 @@ services:
     networks:
       - hospital-net
 
+  auth-service:
+    build:
+      context: ./auth
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+    networks:
+      - hospital-net
+
+  admin-service:
+    build:
+      context: ./admin
+    container_name: admin-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka-server
+    networks:
+      - hospital-net
+
+  doctor-service:
+    build:
+      context: ./doctor
+    container_name: doctor-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+    networks:
+      - hospital-net
+
+  diagnosis-service:
+    build:
+      context: ./diagnosis
+    container_name: diagnosis-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+    networks:
+      - hospital-net
+
+  gateway-service:
+    build:
+      context: ./spring-cloud-gateway
+    container_name: spring-cloud-gateway-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+    networks:
+      - hospital-net
+
 networks:
   hospital-net:
     driver: bridge
