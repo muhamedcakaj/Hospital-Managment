@@ -65,6 +65,13 @@ public class AuthServiceImpl implements AuthService {
         if(entity.getRole() != null ){
             authEntity.setRole(entity.getRole());
         }
+        if(entity.getConfirmationCode() != null ){
+            authEntity.setConfirmationCode(entity.getConfirmationCode());
+        }
+        if(entity.getConfirmationCodeExpiry() != null ){
+            authEntity.setConfirmationCodeExpiry(entity.getConfirmationCodeExpiry());
+        }
+
         return authRepository.save(authEntity);
     }
 
@@ -106,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse login(LoginDTO loginDTO) {
+    public void login(LoginDTO loginDTO) {
 
         AuthEntity userEntity = authRepository.findByEmail(loginDTO.getEmail());
 
@@ -114,18 +121,16 @@ public class AuthServiceImpl implements AuthService {
             throw new UserNotFoundException("User not found");
         }
 
-        if(userEntity.getEmailConfirmation()==0){
-            throw new UnauthorizedActionException("Email Confirmation not valid please confirm the email");
-        }
-
         if (!passwordEncoder.matches(loginDTO.getPassword(), userEntity.getPassword())) {
             throw new UnauthorizedActionException("Invalid credentials");
         }
-        String userId=String.valueOf(userEntity.getId());
-        String token = this.jwtService.generateToken(userId, userEntity.getEmail(), userEntity.getRole());
-        String refreshToken = jwtService.generateRefreshToken(userId, userEntity.getEmail());
+        String confirmationCode; confirmationCode = UUID.randomUUID().toString().substring(0, 6);
+        userEntity.setConfirmationCodeExpiry(LocalDateTime.now().plusMinutes(10));
+        userEntity.setConfirmationCode(confirmationCode);
 
-        return new AuthResponse(token, refreshToken);
+        update(userEntity.getId(), userEntity);
+
+        emailService.sendConfirmationEmail(userEntity.getEmail(), confirmationCode);
     }
 
     @Override

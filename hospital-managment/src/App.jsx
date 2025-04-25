@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from './Login/login';
+import Login from './Login/index';
 import SignUp from './SignUp/index';
-import MFAPage from './Login/mfa';
+import MFAPage from './MFA/index';
 import Home from './Dashboard/home';
 import Dashboard from './Dashboard/dashboard';
 import AddCash from './Dashboard/addCash';

@@ -26,8 +26,9 @@ const SignUp = () => {
       });
 
       if (response.ok) {
+        sessionStorage.setItem('email',email)
         alert("Signup successful. Please verify your email and login.");
-        navigate('/');
+        navigate("/mfapage");
       } else {
         const error = await response.text();
         alert(error);

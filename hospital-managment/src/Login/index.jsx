@@ -10,7 +10,7 @@ const Login = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await fetch("http://localhost:8085/login", {
+      const response = await fetch("http://localhost:8085/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -19,7 +19,6 @@ const Login = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         alert("Login successful");
         sessionStorage.setItem('email', email);
         navigate("/mfapage");

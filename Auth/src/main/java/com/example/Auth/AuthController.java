@@ -29,9 +29,9 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginDTO loginDTO) {
-        AuthResponse response = authService.login(loginDTO);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+        authService.login(loginDTO);
+        return ResponseEntity.ok("Login successful. Please verify your email.");
     }
 
     @PostMapping("/confirmEmail")
