@@ -37,7 +37,7 @@ const MfaPage = () => {
                 } else if(decodedPayload.role === "Doctor"){
 
                 } else if(decodedPayload.role === "User"){
-
+                    navigate("/patientdashboard")
                 }
                 alert("authentication Sucesfully");
 

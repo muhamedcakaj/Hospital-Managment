@@ -14,12 +14,14 @@ const PatientDashboard = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`http://localhost:8083/v1/user/${userId}`, {
+        const res = await fetch(`http://localhost:8085/users/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         const data = await res.json();
+        console.log(data);
+        
         setUser(data);
       } catch (err) {
         console.error("Error fetching user:", err);
@@ -40,7 +42,7 @@ const PatientDashboard = () => {
     <div className="flex h-screen">
       <aside className="bg-blue-900 text-white w-64 p-6">
         <h2 className="text-xl font-bold mb-4">👨‍⚕️ Spitali Online</h2>
-        <p className="mb-6">{user.firstName} {user.lastName}</p>
+        <p className="mb-6">{user.first_name} {user.second_name}</p>
         <nav className="space-y-4">
           <Link to="diagnoses" className="block hover:text-blue-300">🧾 Diagnozat e mia</Link>
           <Link to="profile" className="block hover:text-blue-300">👤 Profili im</Link>
