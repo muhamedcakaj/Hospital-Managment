@@ -4,7 +4,8 @@ import Login from './Login/index';
 import SignUp from './SignUp/index';
 import MFAPage from './MFA/index';
 import PatientDashboard from './PatientDashboard/patientDashboard';
-import PatientDiagnoses from './PatientDashboard/patientDiagnoses'
+import PatientDiagnoses from './PatientDashboard/patientDiagnoses';
+import PatientProfile from './PatientDashboard/PatientProfile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         
         <Route path="/patientdashboard" element={<PatientDashboard />}>
         <Route path="diagnoses" element={<PatientDiagnoses />} />
+        <Route path="profile" element={<PatientProfile />} />
         </Route>
 
       </Routes>
