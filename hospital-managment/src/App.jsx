@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from './Login/index';
 import SignUp from './SignUp/index';
 import MFAPage from './MFA/index';
-import Home from './Dashboard/home';
-import Dashboard from './Dashboard/dashboard';
-import AddCash from './Dashboard/addCash';
-import UserDashboard from './Dashboard/userDashboard';
+import PatientDashboard from './PatientDashboard/patientDashboard';
+import Dashboard from './PatientDashboard/dashboard';
+import AddCash from './PatientDashboard/addCash';
+import UserDashboard from './PatientDashboard/userDashboard';
 import AdminDashboard from './AdminDashboard/Admindashboard';
 import AdminHome from './AdminDashboard/adminHome';
 import AdminDashboardUsers from './AdminDashboard/Users/users';
@@ -18,6 +18,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/mfapage" element={<MFAPage />} />
+        
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="home" element={<Home />} />
           <Route path="addCash" element={<AddCash />} />

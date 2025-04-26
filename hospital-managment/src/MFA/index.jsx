@@ -28,12 +28,19 @@ const MfaPage = () => {
                 const data = await response.json();
                 const token = data.token;
                 sessionStorage.setItem("token", token);
-
                 // Decode token to get the user's role
                 const [header, payload] = token.split('.');
                 const decodedPayload = JSON.parse(atob(payload));
+
+                if(decodedPayload.role === "Admin"){
+
+                } else if(decodedPayload.role === "Doctor"){
+
+                } else if(decodedPayload.role === "User"){
+
+                }
                 alert("authentication Sucesfully");
-                // Navigate based on role
+
             } else {
                 const error = await response.text();
                 console.error("Error:", error);

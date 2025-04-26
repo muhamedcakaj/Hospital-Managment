@@ -122,7 +122,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         if (!passwordEncoder.matches(loginDTO.getPassword(), userEntity.getPassword())) {
-            throw new UnauthorizedActionException("Invalid credentials");
+            throw new InvalidUserInputException("Invalid credentials");
         }
         String confirmationCode; confirmationCode = UUID.randomUUID().toString().substring(0, 6);
         userEntity.setConfirmationCodeExpiry(LocalDateTime.now().plusMinutes(10));

@@ -23,8 +23,8 @@ const Login = () => {
         sessionStorage.setItem('email', email);
         navigate("/mfapage");
       } else {
-        const error = await response.text();
-        alert(error);
+        const errorData = await response.json();
+        alert(errorData.error);
       }
     } catch (error) {
       console.error("Error:", error);
