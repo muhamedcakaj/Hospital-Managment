@@ -46,6 +46,8 @@ public class DiagnosisServiceImpl implements DiagnosisService{
 
     @Override
     public void createDiagnosis(DiagnosisCreateDTO diagnosisCreateDTO) {
+        System.out.println(diagnosisCreateDTO.getUserEmail()+" "+diagnosisCreateDTO.getDiagnosis()+" "+diagnosisCreateDTO.getDoctorId());
+
         String url = verifyEmailUrl + "?email=" + diagnosisCreateDTO.getUserEmail();
 
         try {

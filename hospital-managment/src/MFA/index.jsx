@@ -35,7 +35,7 @@ const MfaPage = () => {
                 if(decodedPayload.role === "Admin"){
 
                 } else if(decodedPayload.role === "Doctor"){
-
+                    navigate("/doctordashboard")
                 } else if(decodedPayload.role === "User"){
                     navigate("/patientdashboard")
                 }
