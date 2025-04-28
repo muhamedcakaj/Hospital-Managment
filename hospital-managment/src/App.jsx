@@ -8,6 +8,7 @@ import MFAPage from './MFA/index';
 import PatientDashboard from './PatientDashboard/patientDashboard';
 import PatientDiagnoses from './PatientDashboard/patientDiagnoses';
 import PatientProfile from './PatientDashboard/PatientProfile';
+import PatientAppointment from './PatientDashboard/patientAppoitment';
 
 import DoctorDashboard from './DoctorDashboard/doctorDashboard';
 import DoctorDiagnoses from './DoctorDashboard/doctorDiagnoses';
@@ -25,6 +26,7 @@ function App() {
         <Route path="/patientdashboard" element={<PatientDashboard />}>
         <Route path="diagnoses" element={<PatientDiagnoses />} />
         <Route path="profile" element={<PatientProfile />} />
+        <Route path="appointment" element={<PatientProfile />} />
         </Route>
 
         <Route path="/doctordashboard" element={<DoctorDashboard />}>
