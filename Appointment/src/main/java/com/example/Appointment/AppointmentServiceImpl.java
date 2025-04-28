@@ -2,10 +2,13 @@ package com.example.Appointment;
 
 import com.example.Appointment.DTO.AppointmentCreateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -23,24 +26,29 @@ public class AppointmentServiceImpl implements AppointmentService {
         LocalTime endTime = LocalTime.of(16, 0);
 
         if (dto.getDate().isBefore(today)) {
-            throw new IllegalArgumentException("Cannot create appointment in the past.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot create appointment in the past.");
         }
 
-        if (dto.getTime().isBefore(startTime) || dto.getTime().isAfter(endTime)) {
-            throw new IllegalArgumentException("Appointment must be between 08:00 and 16:00.");
+        LocalTime time = dto.getTime();
+        if (time.isBefore(startTime) || time.isAfter(endTime)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Appointment must be between 08:00 and 16:00.");
         }
 
-        if (dto.getTime().getMinute() != 0 && dto.getTime().getMinute() != 30) {
-            throw new IllegalArgumentException("Appointments must be scheduled at every 30 minutes.");
-        }
-
+        //boolean alreadyBooked = appointmentRepository.existsByDoctorAndDateTime(dto.getDoctorId(), dto.getDate(), dto.getTime());
+       // if (alreadyBooked) {
+          //  throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This time slot is already booked.");
+       // }
         AppointmentEntity appointment = new AppointmentEntity();
         appointment.setDoctorId(dto.getDoctorId());
         appointment.setUserId(dto.getUserId());
         appointment.setDate(dto.getDate());
         appointment.setTime(dto.getTime());
-        appointment.setStatus("PENDING");
 
         appointmentRepository.save(appointment);
+    }
+
+    @Override
+    public List<AppointmentEntity> findAppointmentByDoctorId(int doctorId) {
+        return this.appointmentRepository.findAppointmentsByDoctorId(doctorId);
     }
 }

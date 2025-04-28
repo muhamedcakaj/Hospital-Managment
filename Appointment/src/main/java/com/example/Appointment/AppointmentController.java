@@ -3,10 +3,9 @@ package com.example.Appointment;
 import com.example.Appointment.DTO.AppointmentCreateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/appointments")
@@ -18,6 +17,13 @@ public class AppointmentController {
     public AppointmentController(AppointmentService appointmentService) {
         this.appointmentService = appointmentService;
     }
+
+    @GetMapping("doctor/{id}")
+    public ResponseEntity<List<AppointmentEntity>> findDoctorAppointmentById(@PathVariable int id){
+        List<AppointmentEntity> appointments = appointmentService.findAppointmentByDoctorId(id);
+        return ResponseEntity.ok(appointments);
+    }
+
 
     @PostMapping
     public ResponseEntity<String> createAppointment(@RequestBody AppointmentCreateDTO dto) {
