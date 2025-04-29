@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity,Integer> {
-    List<AppointmentEntity> findAppointmentsByDoctorId(Integer doctorId);
+    List<AppointmentEntity> findAppointmentsByDoctorIdOrderByLocalDateDescLocalTimeDesc(Integer doctorId);
     boolean existsByDoctorIdAndLocalDateAndLocalTime(int doctorId, LocalDate localDate, LocalTime localTime);
-    List<AppointmentEntity>findAppointmentsByUserId(Integer userId);
+    List<AppointmentEntity> findAppointmentsByUserIdOrderByLocalDateDescLocalTimeDesc(int userId);
 }

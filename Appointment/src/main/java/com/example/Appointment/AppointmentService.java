@@ -8,4 +8,6 @@ public interface AppointmentService {
 
     void createAppointment(AppointmentCreateDTO dto);
     List<AppointmentEntity> findAppointmentByDoctorId(int doctorId);
+    List<AppointmentEntity>findAppointmentsByUserId(int userId);
+    public void updateStatus(int id, String newStatus);
 }

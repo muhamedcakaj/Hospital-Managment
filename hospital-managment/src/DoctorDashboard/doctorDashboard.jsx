@@ -70,13 +70,18 @@ const DoctorDashboard = () => {
                 <nav>
                     <ul className="space-y-4">
                         <li>
+                            <Link to="/doctorDashboard/createDiagnosis" className="flex items-center">
+                                <i className="fas fa-plus-circle mr-2"></i>📝 Create Diagnosis
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/doctorDashboard/diagnoses" className="flex items-center">
                                 <i className="fas fa-notes-medical mr-2"></i> 🧾 My Diagnoses
                             </Link>
                         </li>
                         <li>
-                            <Link to="/doctorDashboard/createDiagnosis" className="flex items-center">
-                                <i className="fas fa-plus-circle mr-2"></i>📝 Create Diagnosis
+                            <Link to="/doctorDashboard/myappointment" className="flex items-center">
+                                <i className="fas fa-user-edit mr-2"></i>🗓️ My Appointments
                             </Link>
                         </li>
                         <li>

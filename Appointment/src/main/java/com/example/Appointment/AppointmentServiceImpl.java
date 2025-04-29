@@ -50,6 +50,20 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentEntity> findAppointmentByDoctorId(int doctorId) {
-        return this.appointmentRepository.findAppointmentsByDoctorId(doctorId);
+        return this.appointmentRepository.findAppointmentsByDoctorIdOrderByLocalDateDescLocalTimeDesc(doctorId);
+    }
+
+    @Override
+    public List<AppointmentEntity> findAppointmentsByUserId(int userId) {
+        return this.appointmentRepository.findAppointmentsByUserIdOrderByLocalDateDescLocalTimeDesc(userId);
+    }
+
+    @Override
+    public void updateStatus(int id, String newStatus) {
+        AppointmentEntity appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Appointment not found"));
+
+        appointment.setAppointemntStatus(newStatus);
+        appointmentRepository.save(appointment);
     }
 }
