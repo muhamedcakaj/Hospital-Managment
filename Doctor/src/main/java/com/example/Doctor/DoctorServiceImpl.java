@@ -5,6 +5,8 @@ import com.example.Doctor.ExceptionHandlers.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
@@ -57,5 +59,10 @@ public class DoctorServiceImpl implements DoctorService {
             throw new UserNotFoundException("Doctor Not Found with id: " + id);
         }
         this.doctorRepository.deleteById(id);
+    }
+
+    @Override
+    public List<DoctorEntity> getAll() {
+        return this.doctorRepository.findAll();
     }
 }

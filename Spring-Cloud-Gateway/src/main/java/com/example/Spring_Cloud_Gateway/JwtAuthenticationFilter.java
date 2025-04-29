@@ -1,13 +1,11 @@
 package com.example.Spring_Cloud_Gateway;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -26,7 +24,7 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
     // Public endpoints
     private static final List<String> PUBLIC_PATHS = List.of(
-            "/auth/login", "/auth/signup", "/auth/confirmEmail"
+            "/auth/login", "/auth/signup", "/auth/confirmEmail","/doctors/user"
     );
 
     @Override

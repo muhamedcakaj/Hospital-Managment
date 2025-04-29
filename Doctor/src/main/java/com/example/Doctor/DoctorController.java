@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/doctors")
 @PreAuthorize("hasRole('Doctor')")
@@ -18,9 +20,12 @@ public class DoctorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorEntity> getDoctorById(@PathVariable int id){
-
         DoctorEntity doctorEntity = this.doctorService.findById(id);
         return ResponseEntity.ok(doctorEntity);
+    }
+    @GetMapping("/user")
+    public ResponseEntity<List<DoctorEntity>> getAllDoctors(){
+        return ResponseEntity.ok(this.doctorService.getAll());
     }
 
     @PostMapping
@@ -43,6 +48,5 @@ public class DoctorController {
         doctorService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }

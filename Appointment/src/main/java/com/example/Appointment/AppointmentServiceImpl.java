@@ -25,24 +25,25 @@ public class AppointmentServiceImpl implements AppointmentService {
         LocalTime startTime = LocalTime.of(8, 0);
         LocalTime endTime = LocalTime.of(16, 0);
 
-        if (dto.getDate().isBefore(today)) {
+        if (dto.getLocalDate().isBefore(today)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot create appointment in the past.");
         }
 
-        LocalTime time = dto.getTime();
+        LocalTime time = dto.getLocalTime();
         if (time.isBefore(startTime) || time.isAfter(endTime)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Appointment must be between 08:00 and 16:00.");
         }
 
-        //boolean alreadyBooked = appointmentRepository.existsByDoctorAndDateTime(dto.getDoctorId(), dto.getDate(), dto.getTime());
-       // if (alreadyBooked) {
-          //  throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This time slot is already booked.");
-       // }
+        /*boolean alreadyBooked = appointmentRepository.existsByDoctorIdAndLocalDateAndLocalTime(dto.getDoctorId(), dto.getLocalDate(), dto.getLocalTime());
+        //if (alreadyBooked) {
+           //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This time slot is already booked.");
+       }*/
+
         AppointmentEntity appointment = new AppointmentEntity();
         appointment.setDoctorId(dto.getDoctorId());
         appointment.setUserId(dto.getUserId());
-        appointment.setDate(dto.getDate());
-        appointment.setTime(dto.getTime());
+        appointment.setLocalDate(dto.getLocalDate());
+        appointment.setLocalTime(dto.getLocalTime());
 
         appointmentRepository.save(appointment);
     }

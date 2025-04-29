@@ -44,8 +44,9 @@ const PatientDashboard = () => {
         <h2 className="text-xl font-bold mb-4">👨‍⚕️ Spitali Online</h2>
         <p className="mb-6">{user.first_name} {user.second_name}</p>
         <nav className="space-y-4">
-        <Link to="appointment" className="block hover:text-blue-300">Appointment</Link>
+        <Link to="appointment" className="block hover:text-blue-300">🕒 Create Appointment</Link>
           <Link to="diagnoses" className="block hover:text-blue-300">🧾 Diagnozat e mia</Link>
+          <Link to="" className="block hover:text-blue-300">🗓️ My Appointments</Link>
           <Link to="profile" className="block hover:text-blue-300">👤 Profili im</Link>
           <button onClick={() => setShowLogoutModal(true)} className="text-red-300 hover:text-red-500">
             🚪 Dil jashtë

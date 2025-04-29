@@ -21,13 +21,13 @@ public class AppointmentEntity {
     private int userId;
 
     @Column(nullable=false)
-    private LocalDate date;
+    private LocalDate localDate;
 
     @Column(nullable=false)
-    private LocalTime time;
+    private LocalTime localTime;
 
     @Column(nullable=false, length=12)
-    private String status = "Pending";
+    private String appointemntStatus = "Pending";
 
     public int getId() {
         return id;
@@ -53,27 +53,27 @@ public class AppointmentEntity {
         this.userId = userId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getLocalTime() {
+        return localTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setLocalTime(LocalTime localTime) {
+        this.localTime = localTime;
     }
 
-    public String getStatus() {
-        return status;
+    public String getAppointemntStatus() {
+        return appointemntStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAppointemntStatus(String appointemntStatus) {
+        this.appointemntStatus = appointemntStatus;
     }
 }

@@ -24,6 +24,10 @@ spring:
           uri: lb://DIAGNOSIS
           predicates:
             - Path=/diagnosis/**
+        - id: appointment-service
+          uri: lb://APPOINTMENT
+          predicates:
+            - Path=/appointments/**
     discovery:
       client:
         enabled: true

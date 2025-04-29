@@ -1,13 +1,16 @@
 package com.example.Appointment.DTO;
 
+import jakarta.persistence.TemporalType;
+import org.springframework.data.jpa.repository.Temporal;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AppointmentCreateDTO {
-    private Integer doctorId;
-    private Integer userId;
-    private LocalDate date;
-    private LocalTime time;
+    private int doctorId;
+    private int userId;
+    private LocalDate localDate;
+    private LocalTime localTime;
 
     public Integer getDoctorId() {
         return doctorId;
@@ -25,19 +28,19 @@ public class AppointmentCreateDTO {
         this.userId = userId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setLocalDate(LocalDate date) {
+        this.localDate = date;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getLocalTime() {
+        return localTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setLocalTime(LocalTime time) {
+        this.localTime = time;
     }
 }
