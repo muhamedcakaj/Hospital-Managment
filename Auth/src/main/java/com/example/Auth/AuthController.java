@@ -44,6 +44,4 @@ public class AuthController {
     public ResponseEntity<Integer> verifyEmailForDiagnosis(@RequestParam String email) {
         return ResponseEntity.ok(this.authService.verifyEmailForDiagnosis(email));
     }
-
-
 }

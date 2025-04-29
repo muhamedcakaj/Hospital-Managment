@@ -33,7 +33,7 @@ const DoctorAppointments = () => {
   const handleStatusChange = async (appointmentId, newStatus) => {
     try {
       await axios.put(
-        `http://localhost:8085/appointments/${appointmentId}/status`,
+        `http://localhost:8085/appointments/doctor/${appointmentId}/status`,
         { status: newStatus }, 
         {
           headers: {
