@@ -24,4 +24,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
         refreshTokenRepository.save(refreshToken);
     }
+
+    @Override
+    public void saveRefreshToken(RefreshTokenEntity refreshTokenEntity) {
+        this.refreshTokenRepository.save(refreshTokenEntity);
+    }
 }

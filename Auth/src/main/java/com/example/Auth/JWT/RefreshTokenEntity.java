@@ -20,15 +20,19 @@ public class RefreshTokenEntity {
         return id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
     public String getRefreshToken() {
         return refreshToken;
     }
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

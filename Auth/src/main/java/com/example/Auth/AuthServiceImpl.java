@@ -3,9 +3,10 @@ package com.example.Auth;
 import com.example.Auth.DTO.*;
 import com.example.Auth.EmailService.EmailService;
 import com.example.Auth.ExceptionHandlers.InvalidUserInputException;
-import com.example.Auth.ExceptionHandlers.UnauthorizedActionException;
 import com.example.Auth.ExceptionHandlers.UserNotFoundException;
 import com.example.Auth.JWT.JwtService;
+import com.example.Auth.JWT.RefreshTokenEntity;
+import com.example.Auth.JWT.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,14 +24,16 @@ public class AuthServiceImpl implements AuthService {
     private final EmailService emailService;
     private final JwtService jwtService;
     private final StreamBridge streamBridge;
+    private final RefreshTokenService refreshTokenService;
 
     @Autowired
-    public AuthServiceImpl(PasswordEncoder passwordEncoder, AuthRepository authRepository, EmailService emailService, JwtService jwtService,StreamBridge streamBridge) {
+    public AuthServiceImpl(PasswordEncoder passwordEncoder, AuthRepository authRepository, EmailService emailService, JwtService jwtService, StreamBridge streamBridge, RefreshTokenService refreshTokenService) {
         this.authRepository = authRepository;
         this.emailService = emailService;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
         this.streamBridge = streamBridge;
+        this.refreshTokenService = refreshTokenService;
     }
 
     @Override
@@ -155,6 +158,16 @@ public class AuthServiceImpl implements AuthService {
             String token = this.jwtService.generateToken(userId, user.getEmail(), user.getRole());
             String refreshToken = jwtService.generateRefreshToken(userId, user.getEmail());
 
+        RefreshTokenEntity refreshTokenEntity = this.refreshTokenService.findByUserId(user.getId());
+
+        // Always create a new entity if not found
+        if (refreshTokenEntity == null) {
+            refreshTokenEntity = new RefreshTokenEntity();
+            refreshTokenEntity.setUserId(user.getId());
+        }
+
+        refreshTokenEntity.setRefreshToken(refreshToken);
+        this.refreshTokenService.saveRefreshToken(refreshTokenEntity);
 
         return new AuthResponse(token,refreshToken);
         }
