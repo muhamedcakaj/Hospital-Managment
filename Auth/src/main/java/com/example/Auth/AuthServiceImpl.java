@@ -3,6 +3,7 @@ package com.example.Auth;
 import com.example.Auth.DTO.*;
 import com.example.Auth.EmailService.EmailService;
 import com.example.Auth.ExceptionHandlers.InvalidUserInputException;
+import com.example.Auth.ExceptionHandlers.UnauthorizedActionException;
 import com.example.Auth.ExceptionHandlers.UserNotFoundException;
 import com.example.Auth.JWT.JwtService;
 import com.example.Auth.JWT.RefreshTokenEntity;
@@ -180,5 +181,26 @@ public class AuthServiceImpl implements AuthService {
             return entity.getId();
         }
         return -1;
+    }
+
+    @Override
+    public AuthResponse refreshToken(RefreshTokenRequest request) {
+        String refreshToken = request.getRefreshToken();
+        System.out.println(refreshToken);
+        String userId = jwtService.extractUserId(refreshToken);
+        RefreshTokenEntity savedToken = refreshTokenService.findByUserId(Integer.parseInt(userId));
+        System.out.println(savedToken.getRefreshToken());
+        if (!savedToken.getRefreshToken().equals(refreshToken)) {
+                throw new UnauthorizedActionException("The refreshToken has expiry");
+        }
+
+        AuthEntity user = authRepository.findById(Integer.parseInt(userId)).orElseThrow();
+        String newAccessToken = jwtService.generateToken(userId, user.getEmail(), user.getRole());
+        String newRefreshToken = jwtService.generateRefreshToken(userId, user.getEmail());
+
+        savedToken.setRefreshToken(newRefreshToken);
+        refreshTokenService.saveRefreshToken(savedToken);
+
+        return new AuthResponse(newAccessToken, newRefreshToken);
     }
 }

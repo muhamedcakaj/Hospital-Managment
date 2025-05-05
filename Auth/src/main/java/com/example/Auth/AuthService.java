@@ -1,9 +1,6 @@
 package com.example.Auth;
 
-import com.example.Auth.DTO.AuthResponse;
-import com.example.Auth.DTO.EmailConfirmationRequest;
-import com.example.Auth.DTO.LoginDTO;
-import com.example.Auth.DTO.SignupDTO;
+import com.example.Auth.DTO.*;
 
 public interface AuthService {
     AuthEntity findById(int id);
@@ -15,4 +12,5 @@ public interface AuthService {
     void login(LoginDTO loginDTO);
     AuthResponse verifyEmail(EmailConfirmationRequest request);
     Integer verifyEmailForDiagnosis(String email);
+    AuthResponse refreshToken (RefreshTokenRequest request);
 }

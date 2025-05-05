@@ -1,10 +1,7 @@
 package com.example.Auth;
 
 
-import com.example.Auth.DTO.AuthResponse;
-import com.example.Auth.DTO.EmailConfirmationRequest;
-import com.example.Auth.DTO.LoginDTO;
-import com.example.Auth.DTO.SignupDTO;
+import com.example.Auth.DTO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +40,10 @@ public class AuthController {
     @GetMapping("/verifyEmail/diagnosis")
     public ResponseEntity<Integer> verifyEmailForDiagnosis(@RequestParam String email) {
         return ResponseEntity.ok(this.authService.verifyEmailForDiagnosis(email));
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(this.authService.refreshToken(request));
     }
 }
