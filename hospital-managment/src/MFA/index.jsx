@@ -29,6 +29,7 @@ const MfaPage = () => {
                 const token = data.token;
                 const refreshToken = data.refreshToken;
                 sessionStorage.setItem("token", token);
+                sessionStorage.setItem("refreshToken",refreshToken)
                 // Decode token to get the user's role
                 const [header, payload] = token.split('.');
                 const decodedPayload = JSON.parse(atob(payload));

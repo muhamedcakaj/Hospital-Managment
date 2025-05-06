@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axiosInstance from '../Axios/index';
 
 const EditUserProfile = () => {
   const [user, setUser] = useState(null);
@@ -18,17 +19,11 @@ const EditUserProfile = () => {
   };
 
   const handleSave = async () => {
-    await fetch(`http://localhost:8085/users/${userId}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
+    await axiosInstance.put(`/users/${userId}`, user, {
+      headers: { 'Content-Type': 'application/json' },
     });
     alert("Të dhënat u përditësuan me sukses.");
   };
-
   if (!user) return <div>Loading...</div>;
 
   return (

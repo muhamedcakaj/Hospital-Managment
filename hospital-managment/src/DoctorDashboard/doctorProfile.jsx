@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import axiosInstance from '../Axios';
 
 const DoctorProfile = () => {
     const [doctor, setDoctor] = useState({
@@ -31,19 +32,13 @@ const DoctorProfile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = sessionStorage.getItem('token');
-        const [_, payload] = token.split('.');
-        const decoded = JSON.parse(atob(payload));
-        const doctorId = decoded.sub;
-
-        await axios.put(`http://localhost:8085/doctors/${doctorId}`, doctor, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
+        const doctorId = JSON.parse(atob(sessionStorage.getItem("token").split(".")[1])).sub;
+      
+        await axiosInstance.put(`/doctors/${doctorId}`, doctor, {
+          headers: { 'Content-Type': 'application/json' },
         });
         alert('Profile updated successfully!');
-    };
+      };
 
     return (
         <div>

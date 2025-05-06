@@ -24,7 +24,7 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
     // Public endpoints
     private static final List<String> PUBLIC_PATHS = List.of(
-            "/auth/login", "/auth/signup", "/auth/confirmEmail","/doctors/user"
+            "/auth/login", "/auth/signup", "/auth/confirmEmail","/doctors/user","/auth/refresh-token"
     );
 
     @Override

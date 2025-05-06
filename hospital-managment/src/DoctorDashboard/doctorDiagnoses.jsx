@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import axiosInstance from '../Axios/index';
 
 const DoctorDiagnoses = () => {
     const [diagnoses, setDiagnoses] = useState([]);
 
     useEffect(() => {
         const fetchDiagnoses = async () => {
-            const token = sessionStorage.getItem('token');
-            const [_, payload] = token.split('.');
-            const decoded = JSON.parse(atob(payload));
-            const doctorId = decoded.sub;
-
-            const response = await axios.get(`http://localhost:8085/diagnosis/doctor/${doctorId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setDiagnoses(response.data);
+          const token = sessionStorage.getItem("token");
+          const doctorId = JSON.parse(atob(token.split(".")[1])).sub;
+      
+          const response = await axiosInstance.get(`/diagnosis/doctor/${doctorId}`);
+          setDiagnoses(response.data);
         };
-
         fetchDiagnoses();
-    }, []);
+      }, []);
 
     return (
         <div>

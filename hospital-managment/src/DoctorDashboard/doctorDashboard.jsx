@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import axiosInstance from '../Axios/index';
 
 const DoctorDashboard = () => {
     const [doctorData, setDoctorData] = useState(null);
@@ -10,24 +11,12 @@ const DoctorDashboard = () => {
 
     const fetchDoctorData = async () => {
         try {
-            const response = await fetch(`http://localhost:8085/doctors/${doctorName}`, {
-                headers: {
-                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                },
-            });
-            if (response.status === 401) {
-                alert("Session expired. Please log in again.");
-                sessionStorage.removeItem("token");
-                navigate('/');
-            } else if (!response.ok) {
-                throw new Error("Failed to fetch doctor data");
-            }
-            const data = await response.json();
-            setDoctorData(data);
-        } catch (error) {
-            console.error("Error fetching doctor data:", error);
+          const response = await axiosInstance.get(`/doctors/${doctorName}`);
+          setDoctorData(response.data);
+        } catch (err) {
+          console.error("Error fetching doctor data:", err);
         }
-    };
+      };
 
     const handleLogout = () => {
         sessionStorage.removeItem("token");

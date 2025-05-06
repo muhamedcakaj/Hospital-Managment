@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axiosInstance from '../Axios/index'
 
 export default function AppointmentPage() {
   const [doctors, setDoctors] = useState([]);
@@ -15,16 +16,7 @@ export default function AppointmentPage() {
   const [isLoadingAppointments, setIsLoadingAppointments] = useState(false);
 
   const token = sessionStorage.getItem("token");
-  console.log(token);
   
-
-  const axiosInstance = axios.create({
-    baseURL: "http://localhost:8085",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
   const getUserIdFromToken = () => {
     if (!token) return null;
     try {
@@ -58,14 +50,10 @@ export default function AppointmentPage() {
     if (selectedDoctorId && selectedDate) {
       const fetchAppointments = async () => {
         setIsLoadingAppointments(true);
-        setSelectedTime(""); // Clear selected time when date changes
+        setSelectedTime("");
         try {
           const formattedDate = formatDate(selectedDate);
-          const response = await axiosInstance.get(
-            `/appointments/doctor/${selectedDoctorId}`
-          );
-          console.log(response.data);
-          
+          const response = await axiosInstance.get(`/appointments/doctor/${selectedDoctorId}`);
           setBusyAppointments(response.data);
         } catch (err) {
           console.error(err);
@@ -128,18 +116,14 @@ export default function AppointmentPage() {
         localDate: formatDate(selectedDate),
         localTime: selectedTime,
       });
-      alert("Appointment booked successfully!")
+      alert("Appointment booked successfully!");
       setSuccessMessage("Appointment booked successfully!");
       setSelectedDoctorId("");
       setSelectedDate(null);
       setSelectedTime("");
       setBusyAppointments([]);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Failed to create appointment.");
-      }
+      setError(err.response?.data?.message || "Failed to create appointment.");
     }
   };
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axiosInstance from '../Axios/index';
 
 const UserDiagnoses = () => {
   const [diagnoses, setDiagnoses] = useState([]);
@@ -7,15 +8,13 @@ const UserDiagnoses = () => {
 
   useEffect(() => {
     const fetchDiagnoses = async () => {
-      const res = await fetch(`http://localhost:8085/diagnosis/user/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      setDiagnoses(data);
+      try {
+        const response = await axiosInstance.get(`/diagnosis/user/${userId}`);
+        setDiagnoses(response.data);
+      } catch (err) {
+        console.error("Failed to fetch diagnoses:", err);
+      }
     };
-
     fetchDiagnoses();
   }, [userId]);
 

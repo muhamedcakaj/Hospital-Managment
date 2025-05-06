@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import axiosInstance from '../Axios';
 
 const PatientDashboard = () => {
   const [user, setUser] = useState(null);
@@ -14,21 +15,13 @@ const PatientDashboard = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`http://localhost:8085/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await res.json();
-        console.log(data);
-        
-        setUser(data);
+        const response = await axiosInstance.get(`/users/${userId}`);
+        setUser(response.data);
       } catch (err) {
         console.error("Error fetching user:", err);
       }
     };
-
-    if (userId) fetchUser();
+    fetchUser();
   }, [userId]);
 
   const handleLogout = () => {

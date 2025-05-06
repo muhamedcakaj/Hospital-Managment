@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import axiosInstance from '../Axios/index';
 
 const statusColors = {
   Pending: 'bg-orange-100 text-orange-700 border border-orange-300',
@@ -16,12 +17,8 @@ const MyAppointments = () => {
 
   useEffect(() => {
     if (!userId) return;
-
-    axios.get(`http://localhost:8085/appointments/user/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+  
+    axiosInstance.get(`/appointments/user/${userId}`)
       .then(response => {
         setAppointments(response.data);
         setLoading(false);

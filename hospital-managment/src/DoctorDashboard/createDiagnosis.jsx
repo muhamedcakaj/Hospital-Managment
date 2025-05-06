@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import axiosInstance from '../Axios/index'
 
 const CreateDiagnosis = () => {
     const [userEmail, setUserEmail] = useState('');
@@ -20,19 +21,16 @@ const CreateDiagnosis = () => {
         };
 
         try {
-            await axios.post('http://localhost:8085/diagnosis/doctor', newDiagnosis, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
+            await axiosInstance.post('/diagnosis/doctor', newDiagnosis, {
+              headers: { 'Content-Type': 'application/json' },
             });
             alert('Diagnosis created successfully!');
             setUserEmail('');
             setDiagnosisText('');
-        } catch (error) {
+          } catch (error) {
             console.error(error);
             alert('Failed to create diagnosis.');
-        }
+          }
     };
 
     return (
