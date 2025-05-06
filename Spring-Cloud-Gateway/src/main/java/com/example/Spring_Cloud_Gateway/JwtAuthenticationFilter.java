@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter implements GlobalFilter {
             if(path.startsWith("/diagnosis/doctor")&& !role.equals("Doctor")) {
                 return onError(exchange,"Forbidden : Doctors only",HttpStatus.FORBIDDEN);
             }
-            if(path.startsWith("/appointments/doctor")&& !role.equals("Doctor")) {
+            if(path.startsWith("/appointments/doctors")&& !role.equals("Doctor")) {
                 return onError(exchange,"Forbidden : Doctors only",HttpStatus.FORBIDDEN);
             }
             // 4. Add claims to request headers (optional)

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import axiosInstance from '../Axios/index';
 
 const statusColors = {
   Pending: 'bg-orange-100 text-orange-700 border border-orange-300',
@@ -17,31 +18,22 @@ const DoctorAppointments = () => {
   const doctorId = JSON.parse(atob(token.split('.')[1])).sub; // assuming doctorId is sub
 
   useEffect(() => {
-    axios.get(`http://localhost:8085/appointments/doctor/${doctorId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(response => {
-      setAppointments(response.data);
-      setLoading(false);
-    }).catch(error => {
-      console.error("Error loading appointments:", error);
-      setLoading(false);
-    });
+    axiosInstance.get(`/appointments/doctor/${doctorId}`)
+      .then(response => {
+        setAppointments(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error loading appointments:", error);
+        setLoading(false);
+      });
   }, [doctorId]);
 
   const handleStatusChange = async (appointmentId, newStatus) => {
     try {
-      await axios.put(
-        `http://localhost:8085/appointments/doctor/${appointmentId}/status`,
-        { status: newStatus }, 
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          }
-        }
-      );
+      await axiosInstance.put(`/appointments/doctors/${appointmentId}/status`, {
+        status: newStatus,
+      });
 
       // Update UI
       setAppointments(prev =>
