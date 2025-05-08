@@ -37,7 +37,7 @@ public class AppointmentController {
         return ResponseEntity.ok("Appointment created successfully!");
     }
 
-    @PutMapping("/doctors/{id}/status")
+    @PutMapping("/doctors /{id}/status")
     public ResponseEntity<Void> updateAppointmentStatus(@PathVariable int id, @RequestBody AppointmentUpdate dto) {
         appointmentService.updateStatus(id, dto.getStatus());
         return ResponseEntity.ok().build();
