@@ -10,12 +10,14 @@ import PatientDiagnoses from './PatientDashboard/patientDiagnoses';
 import PatientProfile from './PatientDashboard/PatientProfile';
 import PatientAppointment from './PatientDashboard/patientAppoitment';
 import PatientMyAppointment from './PatientDashboard/myAppointment';
+import PatientMessage from './PatientDashboard/patientMessage';
 
 import DoctorDashboard from './DoctorDashboard/doctorDashboard';
 import DoctorDiagnoses from './DoctorDashboard/doctorDiagnoses';
 import DoctorCreateDiagnoses from './DoctorDashboard/createDiagnosis';
 import DoctorProfile from './DoctorDashboard/doctorProfile';
 import DoctorAppointments from './DoctorDashboard/myAppointment';
+import DoctorMessage from './DoctorDashboard/doctorMessage';
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
         <Route path="profile" element={<PatientProfile />} />
         <Route path="appointment" element={<PatientAppointment/>} />
         <Route path="myappointment" element={<PatientMyAppointment/>} />
+        <Route path="message" element={<PatientMessage/>} />
         </Route>
 
         <Route path="/doctordashboard" element={<DoctorDashboard />}>
@@ -37,6 +40,7 @@ function App() {
         <Route path="createDiagnosis" element={<DoctorCreateDiagnoses />} />
         <Route path="profile" element={<DoctorProfile />} />
         <Route path="myappointment" element={<DoctorAppointments />} />
+        <Route path="message" element={<DoctorMessage />} />
         </Route>
 
 

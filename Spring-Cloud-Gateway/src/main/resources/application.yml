@@ -28,6 +28,10 @@ spring:
           uri: lb://APPOINTMENT
           predicates:
             - Path=/appointments/**
+        - id: chat-service
+          uri: lb://CHAT
+          predicates:
+            - Path=/chat/**
     discovery:
       client:
         enabled: true

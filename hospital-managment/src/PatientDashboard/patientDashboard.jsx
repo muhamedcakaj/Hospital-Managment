@@ -40,6 +40,7 @@ const PatientDashboard = () => {
         <Link to="appointment" className="block hover:text-blue-300">🕒 Create Appointment</Link>
           <Link to="diagnoses" className="block hover:text-blue-300">🧾 Diagnozat e mia</Link>
           <Link to="myappointment" className="block hover:text-blue-300">🗓️ My Appointments</Link>
+          <Link to="message" className="block hover:text-blue-300">💬 Message</Link>
           <Link to="profile" className="block hover:text-blue-300">👤 Profili im</Link>
           <button onClick={() => setShowLogoutModal(true)} className="text-red-300 hover:text-red-500">
             🚪 Dil jashtë
