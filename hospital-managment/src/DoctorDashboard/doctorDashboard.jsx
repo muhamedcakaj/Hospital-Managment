@@ -75,7 +75,7 @@ const DoctorDashboard = () => {
                         </li>
                         <li>
                             <Link to="/doctorDashboard/message" className="flex items-center">
-                                <i className="fas fa-user-edit mr-2"></i>💬 My Message
+                                <i className="fas fa-user-edit mr-2"></i>💬 Message
                             </Link>
                         </li>
                         <li>

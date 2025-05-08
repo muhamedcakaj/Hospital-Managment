@@ -26,20 +26,18 @@ public class ChatServiceImpl implements ChatService {
         msg.setTimestamp(LocalDateTime.now());
         messageRepo.save(msg);
 
-        // Update chat preview
+        // Normalize user IDs
         String uid1 = msg.getSenderId();
         String uid2 = msg.getReceiverId();
+        String normalizedUser1 = uid1.compareTo(uid2) < 0 ? uid1 : uid2;
+        String normalizedUser2 = uid1.compareTo(uid2) < 0 ? uid2 : uid1;
 
-        Optional<ChatPreview> existing = previewRepo
-                .findByUserId1OrUserId2OrderByLastUpdatedDesc(uid1, uid2)
-                .stream()
-                .filter(p -> (p.getUserId1().equals(uid1) && p.getUserId2().equals(uid2)) ||
-                        (p.getUserId1().equals(uid2) && p.getUserId2().equals(uid1)))
-                .findFirst();
+        // Try to find existing preview using normalized IDs
+        Optional<ChatPreview> existing = previewRepo.findByUserId1AndUserId2(normalizedUser1, normalizedUser2);
 
         ChatPreview preview = existing.orElse(new ChatPreview());
-        preview.setUserId1(uid1);
-        preview.setUserId2(uid2);
+        preview.setUserId1(normalizedUser1);
+        preview.setUserId2(normalizedUser2);
         preview.setLastMessage(msg.getContent());
         preview.setLastUpdated(LocalDateTime.now());
 
