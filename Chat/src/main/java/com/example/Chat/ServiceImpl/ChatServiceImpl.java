@@ -39,6 +39,7 @@ public class ChatServiceImpl implements ChatService {
         preview.setUserId1(normalizedUser1);
         preview.setUserId2(normalizedUser2);
         preview.setLastMessage(msg.getContent());
+        preview.setLastSenderId(uid1);
         preview.setLastUpdated(LocalDateTime.now());
 
         previewRepo.save(preview);

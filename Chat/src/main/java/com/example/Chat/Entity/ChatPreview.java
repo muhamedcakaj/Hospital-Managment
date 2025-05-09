@@ -12,6 +12,7 @@ public class ChatPreview {
     private String userId1;
     private String userId2;
     private String lastMessage;
+    private String lastSenderId;
     private LocalDateTime lastUpdated;
 
     public String getUserId1() {
@@ -44,5 +45,13 @@ public class ChatPreview {
 
     public void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public String getLastSenderId() {
+        return lastSenderId;
+    }
+
+    public void setLastSenderId(String lastSenderId) {
+        this.lastSenderId = lastSenderId;
     }
 }
