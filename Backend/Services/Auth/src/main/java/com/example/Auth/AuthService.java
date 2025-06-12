@@ -13,4 +13,6 @@ public interface AuthService {
     AuthResponse verifyEmail(EmailConfirmationRequest request);
     Integer verifyEmailForDiagnosis(String email);
     AuthResponse refreshToken (RefreshTokenRequest request);
+    String addRefreshFcmTokenDto(int userId,FcmTokenDTO fcmTokenDTO);
+    String getUserFcmToken(String email);
 }

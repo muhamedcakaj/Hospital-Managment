@@ -3,8 +3,14 @@ package com.example.Diagnosis;
 import com.example.Diagnosis.DTO.DiagnosisCreateDTO;
 import com.example.Diagnosis.ExceptionHandlers.InvalidUserInputException;
 import com.example.Diagnosis.ExceptionHandlers.UserNotFoundException;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +24,9 @@ public class DiagnosisServiceImpl implements DiagnosisService{
 
     @Value("${auth-service.verify-email-url}")
     private String verifyEmailUrl;
+
+    @Value("${auth-service.fcm-token-url}")
+    private String fcmTokenUrl;
 
     @Autowired
     public DiagnosisServiceImpl(DiagnosisRepository diagnosisRepository,RestTemplate restTemplate) {
@@ -46,7 +55,6 @@ public class DiagnosisServiceImpl implements DiagnosisService{
 
     @Override
     public void createDiagnosis(DiagnosisCreateDTO diagnosisCreateDTO) {
-        System.out.println(diagnosisCreateDTO.getUserEmail()+" "+diagnosisCreateDTO.getDiagnosis()+" "+diagnosisCreateDTO.getDoctorId());
 
         String url = verifyEmailUrl + "?email=" + diagnosisCreateDTO.getUserEmail();
 
@@ -62,6 +70,15 @@ public class DiagnosisServiceImpl implements DiagnosisService{
             diagnosis.setDiagnosis(diagnosisCreateDTO.getDiagnosis());
 
             this.diagnosisRepository.save(diagnosis);
+
+            String fcmTokenUrl = this.fcmTokenUrl + diagnosisCreateDTO.getUserEmail();
+            ResponseEntity<String> response = restTemplate.getForEntity(fcmTokenUrl, String.class);
+            String fcmToken = response.getBody();
+            System.out.println("FCMTOKEN :"+fcmToken);
+
+            if (fcmToken != null && !fcmToken.isBlank() && !fcmToken.equals("null")) {
+                sendPushNotification(fcmToken, "New Diagnosis", "You have a new diagnosis from your doctor.");
+            }
 
         } catch (Exception e) {
             throw new RuntimeException("Could not verify email. AuthService might be down or wrong email.");
@@ -84,5 +101,23 @@ public class DiagnosisServiceImpl implements DiagnosisService{
             throw new InvalidUserInputException("Invalid or unregistered diagnosis.");
         }
         this.diagnosisRepository.deleteById(diagnosisId);
+    }
+
+    @Async
+    protected void sendPushNotification(String fcmToken, String title, String body) {
+        try {
+            Message message = Message.builder()
+                    .setToken(fcmToken)
+                    .setNotification(Notification.builder()
+                            .setTitle(title)
+                            .setBody(body)
+                            .build())
+                    .build();
+
+            String response = FirebaseMessaging.getInstance().send(message);
+            System.out.println("Successfully sent FCM notification: " + response);
+        } catch (FirebaseMessagingException e) {
+            System.err.println("Error sending FCM notification: " + e.getMessage());
+        }
     }
 }

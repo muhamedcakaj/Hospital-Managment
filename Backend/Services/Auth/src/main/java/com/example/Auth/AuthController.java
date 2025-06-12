@@ -41,9 +41,16 @@ public class AuthController {
     public ResponseEntity<Integer> verifyEmailForDiagnosis(@RequestParam String email) {
         return ResponseEntity.ok(this.authService.verifyEmailForDiagnosis(email));
     }
-
+    @GetMapping("/getUserFcmToken/{email}")
+    public ResponseEntity<String>getUserFcmToken(@PathVariable("email") String email){
+        return ResponseEntity.ok(this.authService.getUserFcmToken(email));
+    }
     @PostMapping("/refresh-token")
     public ResponseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         return ResponseEntity.ok(this.authService.refreshToken(request));
+    }
+    @PutMapping("/addFcmToken/{id}")
+    public ResponseEntity<String>addRefreshFcmTokenDto(@PathVariable("id")int userId,@RequestBody FcmTokenDTO fcmTokenDTO) {
+        return ResponseEntity.ok(this.authService.addRefreshFcmTokenDto(userId,fcmTokenDTO));
     }
 }

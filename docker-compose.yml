@@ -2,7 +2,7 @@ services:
 
   eureka-server:
     build:
-      context: ./eureka
+      context: ./Backend/Eureka/Eureka
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -11,7 +11,7 @@ services:
 
   user-service:
     build:
-      context: ./user
+      context: ./Backend/Services/User
     container_name: user-service
     ports:
       - "8080:8080"
@@ -22,7 +22,7 @@ services:
 
   auth-service:
     build:
-      context: ./auth
+      context: ./Backend/Services/Auth
     container_name: auth-service
     ports:
       - "8081:8081"
@@ -33,7 +33,7 @@ services:
 
   admin-service:
     build:
-      context: ./admin
+      context: ./Backend/Services/Admin
     container_name: admin-service
     ports:
       - "8083:8083"
@@ -44,7 +44,7 @@ services:
 
   doctor-service:
     build:
-      context: ./doctor
+      context: ./Backend/Services/Doctor
     container_name: doctor-service
     ports:
       - "8082:8082"
@@ -55,7 +55,7 @@ services:
 
   diagnosis-service:
     build:
-      context: ./diagnosis
+      context: ./Backend/Services/Diagnosis
     container_name: diagnosis-service
     ports:
       - "8084:8084"
@@ -66,7 +66,7 @@ services:
 
   chat-service:
     build:
-      context: ./chat
+      context: ./Backend/Services/Chat
     container_name: chat-service
     ports:
       - "8087:8087"
@@ -77,7 +77,7 @@ services:
 
   appointment-service:
     build:
-      context: ./appointment
+      context: ./Backend/Services/Appointment
     container_name: appointment-service
     ports:
       - "8086:8086"
@@ -88,7 +88,7 @@ services:
 
   gateway-service:
     build:
-      context: ./spring-cloud-gateway
+      context: ./Backend/Gateway/Spring-Cloud-Gateway
     container_name: spring-cloud-gateway-service
     ports:
       - "8085:8085"

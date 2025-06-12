@@ -27,6 +27,8 @@ public class AuthEntity {
 
     private LocalDateTime confirmationCodeExpiry;
 
+    private String fcmtoken;
+
     public int getId() {
         return id;
     }
@@ -77,5 +79,13 @@ public class AuthEntity {
 
     public void setEmailConfirmation(int emailConfirmation) {
         this.emailConfirmation = emailConfirmation;
+    }
+
+    public String getFcmtoken() {
+        return fcmtoken;
+    }
+
+    public void setFcmtoken(String fcmtoken) {
+        this.fcmtoken = fcmtoken;
     }
 }

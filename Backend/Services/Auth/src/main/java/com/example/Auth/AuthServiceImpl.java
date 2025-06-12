@@ -203,4 +203,25 @@ public class AuthServiceImpl implements AuthService {
 
         return new AuthResponse(newAccessToken, newRefreshToken);
     }
+
+    @Override
+    public String addRefreshFcmTokenDto(int userId, FcmTokenDTO fcmTokenDTO) {
+        AuthEntity authEntity = findById(userId);
+
+        authEntity.setFcmtoken(fcmTokenDTO.getFcmToken());
+
+        authRepository.save(authEntity);
+
+        return "Token added";
+    }
+
+    @Override
+    public String getUserFcmToken(String email) {
+        AuthEntity authEntity = findByEmail(email);
+
+        if(authEntity.getFcmtoken()!=null){
+            return authEntity.getFcmtoken();
+        }
+        return null;
+    }
 }
