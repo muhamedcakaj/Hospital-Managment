@@ -3,14 +3,10 @@ package com.example.Diagnosis;
 import com.example.Diagnosis.DTO.DiagnosisCreateDTO;
 import com.example.Diagnosis.ExceptionHandlers.InvalidUserInputException;
 import com.example.Diagnosis.ExceptionHandlers.UserNotFoundException;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
+import com.example.Diagnosis.FireBase.FcmNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,6 +17,8 @@ public class DiagnosisServiceImpl implements DiagnosisService{
 
     private final DiagnosisRepository diagnosisRepository;
     RestTemplate restTemplate;
+    private final FcmNotificationService fcmNotificationService;
+
 
     @Value("${auth-service.verify-email-url}")
     private String verifyEmailUrl;
@@ -29,9 +27,10 @@ public class DiagnosisServiceImpl implements DiagnosisService{
     private String fcmTokenUrl;
 
     @Autowired
-    public DiagnosisServiceImpl(DiagnosisRepository diagnosisRepository,RestTemplate restTemplate) {
+    public DiagnosisServiceImpl(DiagnosisRepository diagnosisRepository, RestTemplate restTemplate, FcmNotificationService fcmNotificationService) {
         this.diagnosisRepository = diagnosisRepository;
         this.restTemplate = restTemplate;
+        this.fcmNotificationService = fcmNotificationService;
     }
     public DiagnosisEntity findById(int id) {
         return this.diagnosisRepository.findById(id)
@@ -74,10 +73,8 @@ public class DiagnosisServiceImpl implements DiagnosisService{
             String fcmTokenUrl = this.fcmTokenUrl + diagnosisCreateDTO.getUserEmail();
             ResponseEntity<String> response = restTemplate.getForEntity(fcmTokenUrl, String.class);
             String fcmToken = response.getBody();
-            System.out.println("FCMTOKEN :"+fcmToken);
-
             if (fcmToken != null && !fcmToken.isBlank() && !fcmToken.equals("null")) {
-                sendPushNotification(fcmToken, "New Diagnosis", "You have a new diagnosis from your doctor.");
+                this.fcmNotificationService.sendPushNotification(fcmToken, "New Diagnosis", "You have a new diagnosis from your doctor.");
             }
 
         } catch (Exception e) {
@@ -103,21 +100,4 @@ public class DiagnosisServiceImpl implements DiagnosisService{
         this.diagnosisRepository.deleteById(diagnosisId);
     }
 
-    @Async
-    protected void sendPushNotification(String fcmToken, String title, String body) {
-        try {
-            Message message = Message.builder()
-                    .setToken(fcmToken)
-                    .setNotification(Notification.builder()
-                            .setTitle(title)
-                            .setBody(body)
-                            .build())
-                    .build();
-
-            String response = FirebaseMessaging.getInstance().send(message);
-            System.out.println("Successfully sent FCM notification: " + response);
-        } catch (FirebaseMessagingException e) {
-            System.err.println("Error sending FCM notification: " + e.getMessage());
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.Diagnosis;
+package com.example.Diagnosis.FireBase;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
