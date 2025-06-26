@@ -1,17 +1,14 @@
 package com.example.Admin;
 
-import com.example.Admin.Dto.CreateDoctorDTO;
-import com.example.Admin.Dto.CreateUserDTO;
-import com.example.Admin.Dto.UpdateDoctorDTO;
-import com.example.Admin.Dto.UpdateUserDTO;
+import com.example.Admin.Dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-@PreAuthorize("hasRole('Admin')")
 public class AdminController {
 
     private final AdminService adminService;
@@ -19,6 +16,16 @@ public class AdminController {
     @Autowired
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
+    }
+
+    @GetMapping("/users/read")
+    public ResponseEntity<List<ReadUserDTO>> readAllUsers() {
+        return ResponseEntity.ok(adminService.getAllUsers());
+    }
+
+    @GetMapping("/doctors/read")
+    public ResponseEntity<List<ReadDoctorDTO>> readAllDoctors() {
+        return ResponseEntity.ok(adminService.getAllDoctors());
     }
 
     @PostMapping("/users")

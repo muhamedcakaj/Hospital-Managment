@@ -80,7 +80,7 @@ export default function DoctorMessages() {
               onClick={() => setSelectedUserId(otherUserId)}
             >
               <div>
-                <div className="font-semibold text-gray-800">User: {otherUserId}</div>
+                <div className="font-semibold text-gray-800">{conv.patientName+" "+conv.patientSurname}</div>
                 <div className={`text-xs px-2 py-0.5 rounded-full w-fit mt-1 ${badgeColor}`}>
                   {status}
                 </div>
@@ -95,7 +95,7 @@ export default function DoctorMessages() {
         {selectedUserId ? (
           <>
             <div className="font-semibold text-lg text-gray-800 border-b pb-2 mb-2">
-              Chat with User {selectedUserId}
+              Chat with Patient {}
             </div>
 
             <div className="flex-1 overflow-y-auto space-y-2 pr-1">
@@ -104,7 +104,7 @@ export default function DoctorMessages() {
                   key={i}
                   className={`max-w-[70%] px-3 py-2 rounded-xl text-sm ${
                     m.senderId === userId
-                      ? "bg-green-100 self-end text-right ml-auto"
+                      ? "bg-blue-500 text-white ml-auto text-right"
                       : "bg-white self-start text-left mr-auto border"
                   }`}
                 >

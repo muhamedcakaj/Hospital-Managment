@@ -1,6 +1,9 @@
 package com.example.Diagnosis;
 
 import com.example.Diagnosis.DTO.DiagnosisCreateDTO;
+import com.example.Diagnosis.DTO.DoctorPersonalInfoDTO;
+import com.example.Diagnosis.DTO.UserPersonalInfoDTO;
+import com.example.Diagnosis.EmailService.EmailService;
 import com.example.Diagnosis.ExceptionHandlers.InvalidUserInputException;
 import com.example.Diagnosis.ExceptionHandlers.UserNotFoundException;
 import com.example.Diagnosis.FireBase.FcmNotificationService;
@@ -26,11 +29,20 @@ public class DiagnosisServiceImpl implements DiagnosisService{
     @Value("${auth-service.fcm-token-url}")
     private String fcmTokenUrl;
 
+    @Value("${doctor-service.getDoctor-info-url}")
+    private String getDoctorPersonalInfoUrl;
+
+    @Value("${user-service.getUser-info-url}")
+    private String getUserPersonalInfoUrl;
+
+    private final EmailService emailService;
+
     @Autowired
-    public DiagnosisServiceImpl(DiagnosisRepository diagnosisRepository, RestTemplate restTemplate, FcmNotificationService fcmNotificationService) {
+    public DiagnosisServiceImpl(DiagnosisRepository diagnosisRepository, RestTemplate restTemplate, FcmNotificationService fcmNotificationService,EmailService emailService) {
         this.diagnosisRepository = diagnosisRepository;
         this.restTemplate = restTemplate;
         this.fcmNotificationService = fcmNotificationService;
+        this.emailService=emailService;
     }
     public DiagnosisEntity findById(int id) {
         return this.diagnosisRepository.findById(id)
@@ -62,14 +74,34 @@ public class DiagnosisServiceImpl implements DiagnosisService{
             if (userId <= 0) {
                 throw new InvalidUserInputException("Invalid or unregistered user email.");
             }
+            //Send Email
+            this.emailService.sendConfirmationEmail(diagnosisCreateDTO.getUserEmail(), diagnosisCreateDTO.getDiagnosis());
+
+            //Get Doctor PersonalInfo
+            String getDoctorPersonalInfoUrl = this.getDoctorPersonalInfoUrl + diagnosisCreateDTO.getDoctorId();
+            ResponseEntity<DoctorPersonalInfoDTO> doctorInfoResponse = restTemplate.getForEntity(getDoctorPersonalInfoUrl, DoctorPersonalInfoDTO.class);
+            DoctorPersonalInfoDTO doctorPersonalInfoDTO = doctorInfoResponse.getBody();
+
+            //Get User Personal Data
+            String getUserPersonalInfoUrl = this.getUserPersonalInfoUrl + userId;
+            ResponseEntity<UserPersonalInfoDTO> userInfoResponse = restTemplate.getForEntity(getUserPersonalInfoUrl, UserPersonalInfoDTO.class);
+            UserPersonalInfoDTO userPersonalInfoDTO = userInfoResponse.getBody();
+            //Saving in database
             DiagnosisEntity diagnosis = new DiagnosisEntity();
 
             diagnosis.setDoctorId(diagnosisCreateDTO.getDoctorId());
+            diagnosis.setDoctorName(doctorPersonalInfoDTO.getFirst_name());
+            diagnosis.setDoctorSurname(doctorPersonalInfoDTO.getLast_name());
+
             diagnosis.setUserId(userId);
+            diagnosis.setUserName(userPersonalInfoDTO.getFirst_name());
+            diagnosis.setUserSurname(userPersonalInfoDTO.getSecond_name());
+
             diagnosis.setDiagnosis(diagnosisCreateDTO.getDiagnosis());
 
             this.diagnosisRepository.save(diagnosis);
 
+            //Sending notifications to mobile
             String fcmTokenUrl = this.fcmTokenUrl + diagnosisCreateDTO.getUserEmail();
             ResponseEntity<String> response = restTemplate.getForEntity(fcmTokenUrl, String.class);
             String fcmToken = response.getBody();

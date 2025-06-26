@@ -5,6 +5,8 @@ import com.example.User.ExceptionHandlers.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -19,6 +21,11 @@ public class UserServiceImpl implements UserService {
     public UserEntity findById(int id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User Not Found with id: " + id));
+    }
+
+    @Override
+    public List<UserEntity> findAll() {
+        return this.userRepository.findAll();
     }
 
     @Override
@@ -47,4 +54,6 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.deleteById(id);
     }
+
+
 }

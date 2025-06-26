@@ -5,7 +5,7 @@ public class UpdateUserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private int emailConfirmation;
+    private int emailConfirmation=1;
 
     public int getId() {
         return id;

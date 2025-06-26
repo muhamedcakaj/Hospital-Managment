@@ -105,7 +105,7 @@ export default function UserMessages({ loggedInUser }) {
                 className="flex items-center justify-between bg-white shadow-sm border rounded-lg p-3 hover:shadow-md transition"
               >
                 <div>
-                  <div className="font-medium text-gray-800">Doctor ID: {docId}</div>
+                  <div className="font-medium text-gray-800">Doctor : {conv.doctorName+" "+conv.doctorSurname}</div>
                   <div className={`text-xs ${statusColor}`}>{status}</div>
                 </div>
                 <button

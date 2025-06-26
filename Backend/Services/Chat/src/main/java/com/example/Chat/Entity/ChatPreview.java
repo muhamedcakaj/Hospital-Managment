@@ -11,6 +11,10 @@ public class ChatPreview {
     private String id;
     private String userId1;
     private String userId2;
+    private String doctorName;
+    private String doctorSurname;
+    private String patientName;
+    private String patientSurname;
     private String lastMessage;
     private String lastSenderId;
     private LocalDateTime lastUpdated;
@@ -53,5 +57,37 @@ public class ChatPreview {
 
     public void setLastSenderId(String lastSenderId) {
         this.lastSenderId = lastSenderId;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getDoctorSurname() {
+        return doctorSurname;
+    }
+
+    public void setDoctorSurname(String doctorSurname) {
+        this.doctorSurname = doctorSurname;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getPatientSurname() {
+        return patientSurname;
+    }
+
+    public void setPatientSurname(String patientSurname) {
+        this.patientSurname = patientSurname;
     }
 }

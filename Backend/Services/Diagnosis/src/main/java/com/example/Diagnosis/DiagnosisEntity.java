@@ -15,8 +15,20 @@ public class DiagnosisEntity {
     @Column(nullable = false)
     private int doctorId;
 
+    @Column(nullable = false,length = 15)
+    private String doctorName;
+
+    @Column(nullable = false,length =15)
+    private String doctorSurname;
+
     @Column(nullable = false)
     private int userId;
+
+    @Column(nullable = false,length = 20)
+    private String userName;
+
+    @Column(nullable = false,length = 20)
+    private String userSurname;
 
     @Column(nullable = false)
     private String diagnosis;
@@ -63,5 +75,37 @@ public class DiagnosisEntity {
 
     public void setDiagnosis_date(LocalDateTime diagnosis_date) {
         this.diagnosis_date = diagnosis_date;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getDoctorSurname() {
+        return doctorSurname;
+    }
+
+    public void setDoctorSurname(String doctorSurname) {
+        this.doctorSurname = doctorSurname;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public void setUserSurname(String userSurname) {
+        this.userSurname = userSurname;
     }
 }

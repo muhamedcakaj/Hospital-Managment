@@ -1,33 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useNavigate } from "react-router-dom";
-const Dashboard = () => {
-    const [userData, setUserData] = useState(null);
-    const [userName, setUserName] = useState("");
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import axiosInstance from '../Axios/index';
+
+const AdminDashboard = () => {
+    const [adminData, setAdminData] = useState(null);
+    const [adminName, setAdminName] = useState("");
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleUser = async () => {
-        try {
-            const response = await fetch(`http://localhost:8083/v1/user/username/${userName}`, {
-                headers: {
-                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                },
-            });
-            if (response.status === 401) {
-                alert("Session expired. Please log in again.");
-                sessionStorage.removeItem("token");
-                navigate('/');
-            } else if (!response.ok) {
-                throw new Error("Failed to fetch user data");
-            }
-            const data = await response.json();
-            setUserData(data);
-        } catch (error) {
-            console.error("Error fetching user data:", error);
-        }
-    };
+    const isWelcomePage = location.pathname === '/adminDashboard' || location.pathname === '/adminDashboard/';
 
-    const handleLogOut = async () => {
+    const handleLogout = () => {
         sessionStorage.removeItem("token");
         navigate('/');
     };
@@ -40,76 +24,112 @@ const Dashboard = () => {
         setShowLogoutModal(false);
     };
 
+    const navigationItems = [
+        { to: "usersManagment", icon: "👥", label: "Manage Users" },
+        { to: "doctorsManagment", icon: "👨‍⚕️", label: "Manage Doctors" },
+    ];
+
     useEffect(() => {
         const token = sessionStorage.getItem("token");
-        const [header, payload, signature] = token.split('.');
-        const decodedPayload = atob(payload);
-        const payloadObject = JSON.parse(decodedPayload);
-        setUserName(payloadObject.sub);
-
-        if (userName) {
-            handleUser();
+        if (token) {
+            try {
+                const [header, payload, signature] = token.split('.');
+                const decodedPayload = atob(payload);
+                const payloadObject = JSON.parse(decodedPayload);
+                // Assuming admin name is in payloadObject.name or similar
+                setAdminName(payloadObject.name || 'Admin');
+                // You might want to fetch more admin data here if needed
+            } catch (error) {
+                console.error("Error decoding token:", error);
+                // Handle invalid token, e.g., redirect to login
+                navigate('/');
+            }
+        } else {
+            // No token found, redirect to login
+            navigate('/');
         }
-    }, [userName]);
-
-    if (!userData) {
-        return <div>Loading...</div>;
-    }
+    }, [navigate]);
 
     return (
-        <div className="flex flex-col md:flex-row h-screen bg-gray-100">
+        <div className="flex h-screen bg-gray-50">
             {/* Sidebar */}
-            <div className="bg-gray-900 text-white w-full md:w-1/4 p-4">
-                <div className="text-center mb-6">
-                    <div className="rounded-full bg-gray-700 w-20 h-20 mx-auto"></div>
-                    <h3 className="mt-4">{userData.name}</h3>
-                    <p className="text-sm text-gray-400">Admin • Online</p>
+            <aside className="bg-blue-900 text-white w-64 p-6 shadow-lg">
+                <div className="mb-8">
+                    <div className="bg-blue-800 rounded-lg p-4">
+                        <div className="w-16 h-16 bg-blue-700 rounded-full mx-auto mb-3 flex items-center justify-center">
+                            <span className="text-2xl font-bold">
+                                {adminName.charAt(0).toUpperCase()}
+                            </span>
+                        </div>
+                        <p className="font-semibold text-center">
+                            {adminName}
+                        </p>
+                        <p className="text-blue-200 text-sm text-center">🛡️ Administrator • Online</p>
+                    </div>
                 </div>
-                <nav>
-                    <ul className="space-y-4">
-                        <li>
-                            <Link to="/adminDashboard/adminHome" className="flex items-center">
-                                <i className="fas fa-tachometer-alt mr-2"></i> Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/adminDashboard/adminDashboardUsers" className="flex items-center">
-                                <i className="fas fa-money-bill-alt mr-2"></i> Users
-                            </Link>
-                        </li>
-                        <li>
-                            <button
-                                className="flex items-center text-red-500"
-                                onClick={confirmLogout}
-                            >
-                                <i className="fas fa-sign-out-alt mr-2"></i> Log Out
-                            </button>
-                        </li>
-                    </ul>
+                
+                <nav className="space-y-2">
+                    <Link 
+                        to="/adminDashboard" 
+                        className={`block p-3 rounded-lg transition-colors duration-200 ${
+                            isWelcomePage 
+                                ? 'bg-blue-700 text-white' 
+                                : 'hover:bg-blue-800 hover:text-blue-100'
+                        }`}
+                    >
+                        🏠 Dashboard
+                    </Link>
+                    
+                    {navigationItems.map((item) => (
+                        <Link 
+                            key={item.to}
+                            to={item.to} 
+                            className={`block p-3 rounded-lg transition-colors duration-200 ${
+                                location.pathname.includes(item.to)
+                                    ? 'bg-blue-700 text-white' 
+                                    : 'hover:bg-blue-800 hover:text-blue-100'
+                            }`}
+                        >
+                            {item.icon} {item.label}
+                        </Link>
+                    ))}
+                    
+                    <div className="pt-4 mt-4 border-t border-blue-700">
+                        <button
+                            className="w-full text-left p-3 rounded-lg text-red-300 hover:bg-red-900 hover:text-red-100 transition-colors duration-200"
+                            onClick={confirmLogout}
+                        >
+                            🚪 Log Out
+                        </button>
+                    </div>
                 </nav>
-            </div>
+            </aside>
 
-            {/* Dashboard Content */}
-            <div className="flex-1 p-6">
-                <Outlet />
-            </div>
+            {/* Main Content Area */}
+            <main className="flex-1 p-8 overflow-y-auto">
+                <Outlet /> {/* This is where the child routes will render */}
+            </main>
 
             {/* Logout Confirmation Modal */}
             {showLogoutModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded shadow-lg">
-                        <h3 className="text-lg font-semibold mb-4">Confirm Logout</h3>
-                        <p className="mb-6">Are you sure you want to log out?</p>
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+                        <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                            Confirm Logout
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            Are you sure you want to log out? Any unsaved work will be lost.
+                        </p>
                         <div className="flex justify-end space-x-4">
                             <button
-                                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200"
                                 onClick={cancelLogout}
                             >
                                 Cancel
                             </button>
                             <button
-                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                                onClick={handleLogOut}
+                                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200"
+                                onClick={handleLogout}
                             >
                                 Log Out
                             </button>
@@ -121,4 +141,6 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default AdminDashboard;
+
+

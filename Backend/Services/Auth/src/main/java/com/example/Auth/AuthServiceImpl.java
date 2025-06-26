@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -208,7 +209,7 @@ public class AuthServiceImpl implements AuthService {
     public String addRefreshFcmTokenDto(int userId, FcmTokenDTO fcmTokenDTO) {
         AuthEntity authEntity = findById(userId);
 
-        authEntity.setFcmtoken(fcmTokenDTO.getFcmToken());
+        authEntity.setFcmToken(fcmTokenDTO.getFcmToken());
 
         authRepository.save(authEntity);
 
@@ -219,9 +220,47 @@ public class AuthServiceImpl implements AuthService {
     public String getUserFcmToken(String email) {
         AuthEntity authEntity = findByEmail(email);
 
-        if(authEntity.getFcmtoken()!=null){
-            return authEntity.getFcmtoken();
+        if(authEntity.getFcmToken()!=null){
+            return authEntity.getFcmToken();
         }
         return null;
+    }
+
+    @Override
+    public String getUserFcmToken2(int id) {
+        AuthEntity authEntity = findById(id);
+        if(authEntity.getFcmToken()!=null){
+            return authEntity.getFcmToken();
+        }
+        return null;
+    }
+
+    @Override
+    public String deleteFcmToken(int id) {
+        AuthEntity authEntity = findById(id);
+
+        authEntity.setFcmToken(null);
+
+        System.out.println("here");
+
+        authRepository.save(authEntity);
+
+        return "Token deleted";
+    }
+
+    @Override
+    public String getUserEmail(int id) {
+        AuthEntity authEntity = findById(id);
+
+        return authEntity.getEmail();
+    }
+
+    @Override
+    public List<AuthEntity> getAllDoctors() {
+        return this.authRepository.findByRole("Doctor");
+    }
+    @Override
+    public List<AuthEntity> getAllUsers() {
+        return this.authRepository.findByRole("User");
     }
 }

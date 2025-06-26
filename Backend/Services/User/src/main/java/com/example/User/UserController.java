@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -16,11 +17,15 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable int id) {
         UserEntity user = userService.findById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/getUsers")
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
+        return ResponseEntity.ok(this.userService.findAll());
     }
 
     @PostMapping

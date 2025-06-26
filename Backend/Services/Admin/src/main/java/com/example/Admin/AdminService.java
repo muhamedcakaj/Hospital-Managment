@@ -1,9 +1,8 @@
 package com.example.Admin;
 
-import com.example.Admin.Dto.CreateDoctorDTO;
-import com.example.Admin.Dto.CreateUserDTO;
-import com.example.Admin.Dto.UpdateDoctorDTO;
-import com.example.Admin.Dto.UpdateUserDTO;
+import com.example.Admin.Dto.*;
+
+import java.util.List;
 
 public interface AdminService {
     void createUser(CreateUserDTO dto);
@@ -12,5 +11,7 @@ public interface AdminService {
     void updateDoctor(UpdateDoctorDTO dto);
     void deleteUser(int id);
     void deleteDoctor(int id);
+    List<ReadUserDTO> getAllUsers();
+    List<ReadDoctorDTO> getAllDoctors();
 
 }

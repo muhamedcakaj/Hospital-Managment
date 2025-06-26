@@ -30,16 +30,18 @@ const MfaPage = () => {
                 const refreshToken = data.refreshToken;
                 sessionStorage.setItem("token", token);
                 sessionStorage.setItem("refreshToken",refreshToken)
+                console.log("Token: "+token);
+                
                 // Decode token to get the user's role
                 const [header, payload] = token.split('.');
                 const decodedPayload = JSON.parse(atob(payload));
 
                 if(decodedPayload.role === "Admin"){
-
+                    navigate("/adminDashboard")
                 } else if(decodedPayload.role === "Doctor"){
-                    navigate("/doctordashboard")
+                    navigate("/doctordashboard/dashboard")
                 } else if(decodedPayload.role === "User"){
-                    navigate("/patientdashboard")
+                    navigate("/patientdashboard/dashboard")
                 }
                 alert("authentication Sucesfully");
 

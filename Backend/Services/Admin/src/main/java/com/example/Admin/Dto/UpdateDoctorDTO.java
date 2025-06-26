@@ -7,7 +7,7 @@ public class UpdateDoctorDTO {
     private String specialization;
     private String description;
     private String email;
-    private int emailConfirmation;
+    private int emailConfirmation=1;
 
     public int getId() {
         return id;

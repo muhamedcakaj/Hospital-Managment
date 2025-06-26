@@ -17,8 +17,23 @@ public class AppointmentEntity {
     @Column(nullable=false)
     private int doctorId;
 
+    @Column(nullable = false,length = 15)
+    private String doctorName;
+
+    @Column(nullable = false,length = 15)
+    private String doctorSurname;
+
     @Column(nullable=false)
     private int userId;
+
+    @Column(nullable = false,length = 75)
+    private String userEmail;
+
+    @Column(nullable = false,length = 20)
+    private String userName;
+
+    @Column(nullable = false,length = 20)
+    private String userSurname;
 
     @Column(nullable=false)
     private LocalDate localDate;
@@ -75,5 +90,45 @@ public class AppointmentEntity {
 
     public void setAppointemntStatus(String appointemntStatus) {
         this.appointemntStatus = appointemntStatus;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getDoctorSurname() {
+        return doctorSurname;
+    }
+
+    public void setDoctorSurname(String doctorSurname) {
+        this.doctorSurname = doctorSurname;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public void setUserSurname(String userSurname) {
+        this.userSurname = userSurname;
     }
 }
