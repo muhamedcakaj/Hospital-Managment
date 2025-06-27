@@ -24,7 +24,7 @@ Doktori:
 -Backend & Arkitektura
 * Spring Boot për çdo microservice (auth, user, doctor, appointment, diagnosis, chat, admin, etj.)
 * Spring Security + JWT + Refresh Tokens për autentikim dhe autorizim
-* Event-Driven Architecture për komunikim asinkron mes shërbimeve (me RabbitMQ/Kafka)
+* Event-Driven Architecture për komunikim asinkron mes shërbimeve (me RabbitMQ)
 * WebSocket për komunikim në kohë reale ndërmjet pacientëve dhe mjekëve
 * Spring Cloud Gateway & Eureka Server për discovery, routing dhe load balancing
 * SQL Server për të dhëna relacionale (p.sh. users, doctors, appointments)
