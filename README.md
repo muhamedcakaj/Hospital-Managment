@@ -1,17 +1,15 @@
 Kemi zhvilluar një web aplikacion modern, që thjeshton ndjeshëm menaxhimin e takimeve, diagnozave dhe komunikimin mes mjekëve dhe pacientëve. Aplikacioni është ndërtuar me një frontend të fuqishëm në ReactJS dhe një backend të ndarë në mikroshërbime me Spring Boot , duke ndjekur praktikat më të mira të arkitekturës software.
 
-Roli i përdoruesve:
+-Roli i përdoruesve:
 
--Pacienti:
-
+Pacienti:
 * Cakton takime me mjekun
 * Shikon diagnozat personale
 * Ndjek statuset e takimeve të bëra
 * Komunikon në kohë reale me mjekun
 * Përditëson dhe menaxhon të dhënat e profilit
-
--Doktori:
-
+  
+Doktori:
 * Shkruan diagnoza për pacientët
 * Menaxhon terminet (ndryshim statusesh)
 * Ka akses në historikun e diagnozave të tij
@@ -19,13 +17,11 @@ Roli i përdoruesve:
 * Përditëson të dhënat e profilit
 
 -Frontend
-
 * ReactJS për ndërfaqe dinamike dhe moderne
 * TailwindCSS për stilizim të pastër, responsive dhe të shpejtë
 * Axios për komunikim me backend API-të
 
 -Backend & Arkitektura
-
 * Spring Boot për çdo microservice (auth, user, doctor, appointment, diagnosis, chat, admin, etj.)
 * Spring Security + JWT + Refresh Tokens për autentikim dhe autorizim
 * Event-Driven Architecture për komunikim asinkron mes shërbimeve (me RabbitMQ/Kafka)
