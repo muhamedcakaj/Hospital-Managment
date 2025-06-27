@@ -8,6 +8,8 @@ Pacienti:
 * Ndjek statuset e takimeve të bëra
 * Komunikon në kohë reale me mjekun
 * Përditëson dhe menaxhon të dhënat e profilit
+* Lajmërohet automatikisht kur krijohet një diagnozë e re për të ne email
+* Merr njoftim kur ndryshohet statusi i një terminit të tij ne email
   
 Doktori:
 * Shkruan diagnoza për pacientët
