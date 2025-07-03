@@ -1,40 +1,45 @@
-Kemi zhvilluar një web aplikacion modern, që thjeshton ndjeshëm menaxhimin e takimeve, diagnozave dhe komunikimin mes mjekëve dhe pacientëve. Aplikacioni është ndërtuar me një frontend të fuqishëm në ReactJS dhe një backend të ndarë në mikroshërbime me Spring Boot , duke ndjekur praktikat më të mira të arkitekturës software.
+Kemi zhvilluar një web aplikacion modern, që thjeshton ndjeshëm menaxhimin e takimeve, diagnozave dhe komunikimin mes mjekëve dhe pacientëve. Aplikacioni është ndërtuar me një frontend të fuqishëm në **ReactJS** dhe një backend të ndarë në mikroshërbime me **Spring Boot**, duke ndjekur praktikat më të mira të arkitekturës software.
 
--Roli i përdoruesve:
 
-Pacienti:
+### Roli i përdoruesve:
+
+**Pacienti:**
+
 * Cakton takime me mjekun
 * Shikon diagnozat personale
 * Ndjek statuset e takimeve të bëra
 * Komunikon në kohë reale me mjekun
 * Përditëson dhe menaxhon të dhënat e profilit
-* Lajmërohet automatikisht kur krijohet një diagnozë e re për të ne email
-* Merr njoftim kur ndryshohet statusi i një terminit të tij ne email
-  
-Doktori:
+* Lajmërohet automatikisht me email kur krijohet një diagnozë e re
+* Merr njoftim me email kur ndryshohet statusi i një terminit të tij
+
+**Doktori:**
+
 * Shkruan diagnoza për pacientët
 * Menaxhon terminet (ndryshim statusesh)
 * Ka akses në historikun e diagnozave të tij
 * Komunikon me pacientët
 * Përditëson të dhënat e profilit
 
--Frontend
-* ReactJS për ndërfaqe dinamike dhe moderne
-* TailwindCSS për stilizim të pastër, responsive dhe të shpejtë
-* Axios për komunikim me backend API-të
+  
+### Frontend:
 
--Backend & Arkitektura
-* Spring Boot për çdo microservice (auth, user, doctor, appointment, diagnosis, chat, admin, etj.)
-* Spring Security + JWT + Refresh Tokens për autentikim dhe autorizim
-* Event-Driven Architecture për komunikim asinkron mes shërbimeve (me RabbitMQ)
-* WebSocket për komunikim në kohë reale ndërmjet pacientëve dhe mjekëve
-* Spring Cloud Gateway & Eureka Server për discovery, routing dhe load balancing
-* SQL Server për të dhëna relacionale (p.sh. users, doctors, appointments)
-* MongoDBpër të dhëna jo-relacionale (p.sh. mesazhet në chat)
-* Docker për containerizim të të gjithë sistemit dhe vendosje më të lehtë në cloud/VPS
+* **ReactJS** për ndërfaqe dinamike dhe moderne
+* **TailwindCSS** për stilizim të pastër, responsive dhe të shpejtë
+* **Axios** për komunikim me backend API-të
+* 
 
+### Backend & Arkitektura:
 
-
+* **Spring Boot** për çdo microservice (auth, user, doctor, appointment, diagnosis, chat, admin, etj.)
+* **Spring Security** + **JWT** + **Refresh Tokens** për autentikim dhe autorizim
+* **Event-Driven Architecture** për komunikim asinkron mes shërbimeve (me **RabbitMQ**)
+* **WebSocket** për komunikim në kohë reale ndërmjet pacientëve dhe mjekëve
+* **Spring Cloud Gateway** & **Eureka Server** për discovery, routing dhe load balancing
+* **SQL Server** për menaxhimin e të dhënave relacionale (si: përdoruesit, mjekët, terminet, diagnozat)
+* **MongoDB** për ruajtjen e të dhënave jo-relacionale (si: mesazhet në chat në kohë reale)
+* **Docker** për containerizimin dhe orkestrimin e gjithë sistemit
+  
 
 <img width="800" alt="Login" src="https://github.com/user-attachments/assets/f348a510-dcfe-4807-a6f2-01e81a3b39d0" />
 <img width="799" alt="Register" src="https://github.com/user-attachments/assets/77c53def-b407-4d56-a593-c07a27205bb7" />
