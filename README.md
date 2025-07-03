@@ -27,7 +27,6 @@ Kemi zhvilluar një web aplikacion modern, që thjeshton ndjeshëm menaxhimin e 
 * **ReactJS** për ndërfaqe dinamike dhe moderne
 * **TailwindCSS** për stilizim të pastër, responsive dhe të shpejtë
 * **Axios** për komunikim me backend API-të
-* 
 
 ### Backend & Arkitektura:
 
